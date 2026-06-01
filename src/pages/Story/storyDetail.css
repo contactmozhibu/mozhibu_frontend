@@ -1,0 +1,535 @@
+.story-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #e8d4c8 0%, #f5e6e0 100%);
+  min-height: 100vh;
+}
+
+/* STORY TITLE AT TOP */
+.story-title-top {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  color: #1a1a1a;
+  line-height: 1.3;
+}
+
+/* ==================== STORY INFO CARD ==================== */
+.story-info-card {
+  display: flex;
+  gap: 32px;
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.story-cover-wrapper {
+  flex-shrink: 0;
+  width: 220px;
+}
+
+.story-cover {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.story-details-wrapper {
+  flex: 1;
+}
+
+.story-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: #1a1a1a;
+  line-height: 1.3;
+}
+
+.story-tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #f0f0f0;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+}
+
+.story-description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0 0 24px 0;
+}
+
+.story-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.stat-box {
+  text-align: left;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #888;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.story-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-read-now {
+  padding: 12px 32px;
+  background: #c41e3a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-read-now:hover {
+  background: #a01830;
+}
+
+.btn-add-chapter {
+  padding: 10px 20px;
+  background: white;
+  color: #0099cc;
+  border: 2px solid #0099cc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-add-chapter:hover {
+  background: #0099cc;
+  color: white;
+}
+
+/* ==================== AUTHOR CARD ==================== */
+.author-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  gap: 20px;
+}
+
+.author-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.author-avatar-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.author-avatar {
+  width: 56px;
+  height: 56px;
+  background: #2a2a2a;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.author-info h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.author-info p {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: #888;
+}
+
+.followers-link {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.followers-link:hover {
+  color: #0099cc;
+}
+
+.follow-btn {
+  padding: 8px 24px;
+  border: 2px solid #0099cc;
+  background: white;
+  color: #0099cc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+.follow-btn.login-btn {
+  background: #0099cc;
+  color: white;
+  border-color: #0099cc;
+}
+
+.follow-btn.login-btn:hover {
+  background: #0077aa;
+  border-color: #0077aa;
+}
+
+.follow-btn:hover {
+  background: #0099cc;
+  color: white;
+}
+
+.follow-btn.following {
+  background: #0099cc;
+  color: white;
+}
+
+.follow-btn.following:hover {
+  background: #0077aa;
+}
+
+/* ==================== CHAPTERS SECTION ==================== */
+.chapters-section {
+  margin-bottom: 40px;
+}
+
+.chapters-section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  color: #1a1a1a;
+}
+
+.no-chapters {
+  color: #999;
+  font-style: italic;
+  padding: 16px;
+  background: white;
+  border-radius: 6px;
+}
+
+.chapter-item {
+  padding: 18px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chapter-item:hover {
+  background: #f9f9f9;
+  border-color: #0099cc;
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.chapter-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.chapter-meta {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+  color: #888;
+}
+
+/* ==================== FOLLOWERS MODAL ==================== */
+.followers-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.followers-box {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 500px;
+  max-height: 500px;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.followers-box h3 {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.follower-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.follower-item:hover {
+  background: #f5f5f5;
+}
+
+.follower-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.follower-item span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.followers-box button {
+  margin-top: 16px;
+  padding: 10px 20px;
+  background: #0099cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  transition: background 0.3s ease;
+}
+
+.followers-box button:hover {
+  background: #0077aa;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .story-detail {
+    padding: 12px;
+  }
+
+  .story-title-top {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .story-info-card {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .story-cover-wrapper {
+    width: 100%;
+  }
+
+  .story-cover {
+    height: 300px;
+  }
+
+  .story-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .author-card {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .author-avatar-section {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .author-info {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .story-detail {
+    padding: 8px;
+    background: linear-gradient(135deg, #f0e0d8 0%, #f5e6e0 100%);
+  }
+
+  .story-title-top {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .story-info-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .story-cover {
+    height: 250px;
+  }
+
+  .story-description {
+    font-size: 14px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  .story-actions {
+    gap: 8px;
+  }
+
+  .btn-read-now {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+
+  .author-card {
+    padding: 16px;
+  }
+
+  .chapter-item {
+    padding: 12px;
+  }
+
+  .chapter-info h3 {
+    font-size: 14px;
+  }
+
+  .chapter-meta {
+    gap: 12px;
+    font-size: 12px;
+  }
+}
+  border: none;
+  cursor: pointer;
+  background: #ff4d6d;
+  color: white;
+}
+
+.follow-btn.following {
+  background: #ddd;
+  color: #333;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .story-detail-container,
+  .story-detail {
+    padding: 15px;
+    max-width: 100%;
+    margin: 20px auto;
+  }
+
+  .story-top {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .story-cover,
+  .cover {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+  }
+
+  .story-detail h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+
+  .meta {
+    gap: 15px;
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+}

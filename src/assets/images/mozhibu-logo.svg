@@ -1,0 +1,22 @@
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Blue Background -->
+  <rect width="400" height="200" fill="#4D47FF"/>
+  
+  <!-- Orange M Logo -->
+  <g fill="#FF5722">
+    <!-- Left vertical line -->
+    <rect x="80" y="40" width="30" height="100" rx="8"/>
+    <!-- Left top diagonal -->
+    <path d="M 110 40 L 170 120 L 170 40 Z" fill="#FF5722"/>
+    <!-- Right top diagonal -->
+    <path d="M 230 40 L 170 120 L 230 120 Z" fill="#FF5722"/>
+    <!-- Right vertical line -->
+    <rect x="230" y="40" width="30" height="100" rx="8"/>
+  </g>
+  
+  <!-- Mozhibu Text -->
+  <text x="50" y="160" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#FF5722">Mozhibu</text>
+  
+  <!-- Subtitle -->
+  <text x="50" y="185" font-family="Arial, sans-serif" font-size="16" fill="#FF5722" letter-spacing="3">A novel idea</text>
+</svg>

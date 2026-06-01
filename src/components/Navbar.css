@@ -1,0 +1,299 @@
+/*.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background: white;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.nav-links li:hover {
+  color: #2563eb;
+}
+
+.signin {
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+}
+
+*/
+
+/* NAVBAR LAYOUT */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+/* LEFT */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* LANGUAGE */
+.language-select {
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* CENTER */
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 380px;
+  padding: 8px 14px;
+  border-radius: 24px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* RIGHT */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-right a {
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+/* PROFILE */
+.profile-wrapper {
+  position: relative;
+}
+
+.profile-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* DROPDOWN */
+.profile-menu {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  width: 190px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  z-index: 999;
+}
+
+.profile-menu a,
+.profile-menu button {
+  width: 100%;
+  padding: 10px 14px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.profile-menu a:hover,
+.profile-menu button:hover {
+  background: #f4f4f4;
+}
+
+.logout-btn {
+  color: red;
+  font-weight: 600;
+}
+
+.language-select {
+  font-size: 12px;
+  padding: 3px 6px;
+}
+
+.search-input {
+  width: 420px;
+  padding: 9px 16px;
+  font-size: 14px;
+}
+
+.nav-right a {
+  font-size: 13px;
+}
+
+.profile-wrapper {
+  position: relative;
+}
+
+.profile-menu {
+  position: absolute;
+  right: 0;
+  top: 42px;
+  background: white;
+  width: 160px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+
+.profile-menu div {
+  padding: 12px;
+  cursor: pointer;
+}
+
+.profile-menu div:hover {
+  background: #f5f5f5;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .nav-left {
+    gap: 8px;
+    order: 1;
+    width: 100%;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+
+  .language-select {
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+
+  .nav-center {
+    order: 3;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .nav-right {
+    order: 2;
+    gap: 12px;
+  }
+
+  .nav-right a {
+    font-size: 12px;
+  }
+
+  .profile-menu {
+    width: 150px;
+    top: 36px;
+  }
+
+  .profile-menu a,
+  .profile-menu button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav-left {
+    gap: 6px;
+    order: 1;
+    width: 100%;
+  }
+
+  .logo {
+    font-size: 14px;
+  }
+
+  .language-select {
+    font-size: 11px;
+    padding: 2px 5px;
+  }
+
+  .nav-center {
+    order: 3;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .nav-right {
+    order: 2;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .nav-right a {
+    font-size: 11px;
+  }
+
+  .profile-btn {
+    font-size: 12px;
+  }
+
+  .profile-menu {
+    width: 140px;
+    top: 32px;
+    border-radius: 8px;
+  }
+
+  .profile-menu a,
+  .profile-menu button,
+  .profile-menu div {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+}

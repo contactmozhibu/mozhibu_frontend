@@ -1,0 +1,413 @@
+ /* corect code 
+.reader-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 24px;
+}
+
+.story-content {
+  font-size: 18px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.reader-actions {
+  margin-top: 40px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.reader-actions button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+*/
+/* // second best output code
+.reader-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.reader-title {
+  font-size: 32px;
+  margin-bottom: 24px;
+}
+
+.story-content {
+  font-size: 18px;
+  line-height: 1.9;
+  color: #333;
+  white-space: pre-wrap; /* 🔥 THIS FIXES INVISIBLE CONTENT 
+}
+
+.reader-actions {
+  margin-top: 40px;
+  display: flex;
+  gap: 16px;
+}
+
+.reader-actions button {
+  padding: 10px 22px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+*/
+
+.reader-container {
+  max-width: 780px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: "Georgia", serif;
+  line-height: 1.8;
+  color: #222;
+  background-color: #D4F1E4;
+}
+
+/* STORY TEXT */
+.story-content {
+  font-size: 18px;
+  white-space: pre-line;
+  margin-bottom: 40px;
+}
+
+/* RATING */
+.rating-section {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.stars {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.star {
+  opacity: 0.4;
+  transition: 0.2s;
+}
+
+.star.active {
+  opacity: 1;
+}
+
+/* COMMENTS */
+.comment-section {
+  margin-top: 30px;
+}
+
+.comment-section textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.comment-section button {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.comment-list {
+  margin-top: 20px;
+  padding-left: 0;
+}
+
+.comment-list li {
+  list-style: none;
+  background: #f5f5f5;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+}
+
+/* DARK MODE (optional) */
+body.dark .reader-container {
+  color: #eee;
+}
+
+body.dark .comment-list li {
+  background: #333;
+}
+
+
+
+
+.review-box textarea {
+  width: 100%;
+  min-height: 80px;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.review-box button {
+  padding: 8px 16px;
+  background: teal;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.review-card {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: #3bb;
+  color: white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+}
+
+.review-stars {
+  color: gold;
+}
+
+
+.stars span {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.stars.disabled span {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.review-editor {
+  margin: 15px 0;
+}
+
+.review-editor textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.review-editor button {
+  margin-top: 10px;
+  padding: 8px 20px;
+  background: teal;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.review {
+  display: flex;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: teal;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.star {
+  opacity: 0.35;
+  transition: opacity 0.2s ease, text-shadow 0.2s ease;
+}
+
+/* selected star shadow */
+.star.active {
+  opacity: 1;
+  text-shadow:
+    0 2px 4px rgba(245, 179, 1, 0.6),
+    0 0 8px rgba(245, 179, 1, 0.4);
+}
+
+/* hover preview */
+.stars span:hover {
+  text-shadow:
+    0 2px 6px rgba(245, 179, 1, 0.8);
+}
+
+.preview-back-btn {
+  background: none;
+  border: none;
+  color: #0f766e;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.preview-back-btn:hover {
+  text-decoration: underline;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .reader-container {
+    max-width: 100%;
+    margin: 30px auto;
+    padding: 15px;
+  }
+
+  .story-content {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .comment-section textarea {
+    font-size: 13px;
+    min-height: 70px;
+    padding: 8px;
+  }
+
+  .comment-section button {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+
+  .review-box textarea {
+    min-height: 70px;
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .review-box button {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+
+  .stars {
+    font-size: 20px;
+  }
+
+  .stars span {
+    font-size: 20px;
+  }
+
+  .review-editor button {
+    padding: 7px 16px;
+    font-size: 13px;
+  }
+
+  .preview-back-btn {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .reader-container {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 12px;
+  }
+
+  .story-content {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  .rating-section {
+    padding-top: 15px;
+  }
+
+  .comment-section {
+    margin-top: 20px;
+  }
+
+  .comment-section textarea {
+    font-size: 12px;
+    min-height: 60px;
+    padding: 6px;
+  }
+
+  .comment-section button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .comment-list li {
+    padding: 8px;
+    margin-bottom: 6px;
+  }
+
+  .review-box textarea {
+    min-height: 60px;
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .review-box button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .review-card {
+    gap: 8px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 11px;
+  }
+
+  .stars {
+    font-size: 18px;
+  }
+
+  .stars span {
+    font-size: 18px;
+  }
+
+  .review-editor {
+    margin: 12px 0;
+  }
+
+  .review-editor textarea {
+    min-height: 80px;
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .review-editor button {
+    margin-top: 8px;
+    padding: 6px 16px;
+    font-size: 12px;
+  }
+
+  .review {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .preview-back-btn {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+}

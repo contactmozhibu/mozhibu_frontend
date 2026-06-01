@@ -1,0 +1,305 @@
+/* ===============================
+   Draft Home Page ONLY
+   =============================== 
+
+.draft-page {
+  min-height: calc(100vh - 120px); /* keeps space for navbar 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/* Title 
+.draft-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+/* Subtitle 
+.draft-subtitle {
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin-bottom: 50px;
+}
+
+/* Cards wrapper 
+.draft-card-wrapper {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Card base 
+.draft-card {
+  width: 260px;
+  padding: 30px 20px;
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect 
+.draft-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Icon 
+.draft-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* Card title 
+.draft-card h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #5b21b6;
+  margin-bottom: 8px;
+  text-decoration: underline;
+}
+
+/* Card text 
+.draft-card p {
+  font-size: 0.95rem;
+  color: #5b21b6;
+  text-decoration: underline;
+}
+
+/* Mobile 
+@media (max-width: 600px) {
+  .draft-card-wrapper {
+    gap: 24px;
+  }
+
+  .draft-card {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+*/
+
+/* ===============================
+   DraftHome page ONLY
+   No other page is affected
+   =============================== */
+
+.draft-page {
+  min-height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/* Title */
+.draft-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 12px;
+}
+
+/* Subtitle */
+.draft-subtitle {
+  font-size: 1.05rem;
+  color: #6b7280;
+  margin-bottom: 55px;
+  max-width: 520px;
+}
+
+/* Cards container */
+.draft-card-wrapper {
+  display: flex;
+  gap: 42px;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+/* Card base */
+.draft-card {
+  width: 260px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 32px 24px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+.draft-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+}
+
+/* Emoji icon */
+.draft-icon {
+  font-size: 2.6rem;
+  display: block;
+  margin-bottom: 14px;
+}
+
+/* Card heading */
+.draft-card h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #5b21b6;
+  margin-bottom: 8px;
+  text-decoration: underline;
+}
+
+/* Card description */
+.draft-card p {
+  font-size: 0.95rem;
+  color: #0b0b0b;
+  text-decoration: none;
+}
+
+/* Mobile safe */
+@media (max-width: 640px) {
+  .draft-card-wrapper {
+    gap: 24px;
+  }
+
+  .draft-card {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* ===============================
+   Attractive unique box colors
+   DraftHome ONLY
+   =============================== */
+
+/* Start Writing – purple / pink */
+.draft-card.create {
+  background: linear-gradient(135deg, #f5f3ff, #fdf2f8);
+  border: 1px solid #ede9fe;
+}
+
+.draft-card.create:hover {
+  box-shadow: 0 18px 40px rgba(139, 92, 246, 0.25);
+}
+
+/* Your Drafts – blue / teal */
+.draft-card.manage {
+  background: linear-gradient(135deg, #ecfeff, #eff6ff);
+  border: 1px solid #e0f2fe;
+}
+
+.draft-card.manage:hover {
+  box-shadow: 0 18px 40px rgba(59, 130, 246, 0.25);
+}
+
+/* Slightly stronger icon presence */
+.draft-card.create .draft-icon,
+.draft-card.manage .draft-icon {
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.12));
+}
+
+/* Smooth interaction */
+.draft-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .draft-page {
+    min-height: calc(100vh - 120px);
+    padding: 35px 15px;
+  }
+
+  .draft-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+  .draft-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 40px;
+  }
+
+  .draft-card-wrapper {
+    gap: 30px;
+  }
+
+  .draft-card {
+    width: 240px;
+    padding: 24px 18px;
+  }
+
+  .draft-icon {
+    font-size: 2.2rem;
+  }
+
+  .draft-card h2 {
+    font-size: 1.2rem;
+  }
+
+  .draft-card p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .draft-page {
+    min-height: calc(100vh - 100px);
+    padding: 25px 12px;
+  }
+
+  .draft-title {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .draft-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 30px;
+    max-width: 100%;
+  }
+
+  .draft-card-wrapper {
+    gap: 18px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .draft-card {
+    width: 100%;
+    max-width: 280px;
+    padding: 20px 16px;
+  }
+
+  .draft-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .draft-card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+
+  .draft-card p {
+    font-size: 0.85rem;
+  }
+}

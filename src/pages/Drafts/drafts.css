@@ -1,0 +1,705 @@
+.draft-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.draft-actions {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.draft-btn {
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+
+.draft-btn.primary {
+  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  color: #fff;
+}
+
+.draft-btn.secondary {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.draft-input {
+  width: 100%;
+  padding: 12px;
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.draft-textarea {
+  width: 100%;
+  height: 250px;
+  padding: 12px;
+  font-size: 16px;
+}
+
+.draft-card {
+  background: #fafafa;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+}
+
+/* Buttons container */
+.draft-buttons {
+  display: flex;
+  justify-content: space-between; /* left & right */
+  align-items: center;
+  margin-top: 24px;
+}
+
+/* Save Draft button */
+.save-btn {
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: 1px solid #d0d7de;
+  background: #f6f8fa;
+  color: #24292f;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Publish button (attractive) */
+.publish-btn {
+  padding: 12px 28px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255, 122, 24, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect */
+.publish-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(255, 122, 24, 0.45);
+}
+
+.draft-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.draft-card {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.draft-meta {
+  margin-top: 8px;
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #555;
+}
+
+.draft-section {
+  margin-top: 30px;
+}
+
+.draft-section h3 {
+  margin-bottom: 12px;
+  color: #2f7d6d;
+}
+
+.draft-card.published {
+  border-left: 5px solid #2f7d6d;
+}
+
+
+.draft-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+
+
+.edit-btn {
+  background: #ffc107;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.draft-actions button {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  
+}
+
+
+/* ======================
+   BUTTON CONTAINER
+====================== */
+.draft-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* ======================
+   SAVE DRAFT BUTTON
+====================== */
+.draft-buttons button:first-child {
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.draft-buttons button:first-child:hover {
+  background-color: #e6e6e6;
+}
+
+/* ======================
+   PUBLISH BUTTON
+====================== */
+.draft-buttons button:last-child {
+  background-color: #ffb347;   /* green */
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.draft-buttons button:last-child:hover {
+  background-color: #ff7a18;
+}
+
+.draft-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.draft-actions button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+.draft-actions .danger {
+  background-color: #e53935;
+  color: white;
+}
+
+.draft-actions .danger:hover {
+  background-color: #c62828;
+}
+/* ===============================
+   DRAFT FORM LAYOUT FIX new
+=============================== */
+
+.draft-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.draft-container h2 {
+  margin-bottom: 20px;
+}
+
+.draft-container label {
+  display: block;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 6px;
+}
+
+/* Inputs */
+.draft-container input,
+.draft-container textarea,
+.draft-container select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* Textarea */
+.draft-container textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Buttons */
+.draft-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.draft-buttons button {
+  padding: 10px 24px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+/* Save Draft */
+.draft-buttons button:first-child {
+  background: #e5e5e5;
+  color: #000;
+}
+
+/* Publish */
+.draft-buttons button:last-child {
+  background: #ffb74d;
+  color: #fff;
+}
+
+.publish-btn {
+  background-color: #ffb347;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 12px;
+}
+
+.publish-btn:hover {
+  background-color: #ffa726;
+}
+
+
+.draft-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.story-editor {
+  height: 65vh;
+}
+
+.next-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.next-btn {
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+.bottom-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.save-btn {
+  background: #eee;
+  padding: 10px 24px;
+  border-radius: 8px;
+}
+
+.preview-btn {
+  background: #ff3d71;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
+}
+
+.publish-btn {
+  background: orange;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
+}
+
+/* ===== TOP BAR (BACK BUTTON) ===== */
+.top-bar {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+}
+
+.back-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.back-btn:hover {
+  background: #c82333;
+  box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
+}
+
+.back-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+ 
+
+.back-btn:hover {
+  background: #ff0066;
+  color: rgb(253, 246, 246);
+  border-color: #ff0066;
+}
+
+
+.age-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.age-btn, .erotic-btn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.age-btn.selected, .erotic-btn.selected {
+  background-color: #4caf50;
+  color: #fff;
+  border-color: #4caf50;
+}
+
+.erotic-options {
+  margin-top: 8px;
+}
+
+
+
+
+/* Page Layout */
+.draft-page {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Title */
+.draft-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* Subtitle */
+.draft-subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 520px;
+  margin-bottom: 50px;
+}
+
+/* Cards wrapper */
+.draft-card-wrapper {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dual-editor{
+  display:flex;
+  gap:20px;
+  margin-top:10px;
+}
+
+.editor-panel{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.editor-panel h3{
+  margin-bottom:8px;
+  font-weight:600;
+}
+
+.story-editor{
+  height:420px;
+  padding:16px;
+  font-size:16px;
+  line-height:1.8;
+  border-radius:12px;
+  border:1px solid #ddd;
+  resize:none;
+}
+
+.story-editor.tamil{
+  background:#fafafa;
+}
+
+.dual-editor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.editor-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-box label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.translated-box {
+  background: #f5f7fb;
+  border: 1px dashed #aab4ff;
+}
+
+@media (max-width: 900px) {
+  .dual-editor {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.section-label {
+  display: block;
+  margin: 18px 0 8px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* CATEGORY BUTTONS */
+.category-buttons,
+.subcategory-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cat-btn,
+.sub-btn {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cat-btn:hover,
+.sub-btn:hover {
+  border-color: #ff6b6b;
+}
+
+.cat-btn.active {
+  background: #ff6b6b;
+  color: white;
+  border-color: #ff6b6b;
+}
+
+.sub-btn.active {
+  background: #4ecdc4;
+  color: white;
+  border-color: #4ecdc4;
+}
+
+
+.category-buttons,
+.subcategory-buttons{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin:10px 0;
+}
+
+.cat-btn,
+.sub-btn{
+padding:8px 14px;
+border:none;
+background:#f41b7c;
+border-radius:20px;
+cursor:pointer;
+}
+
+.cat-btn.active,
+.sub-btn.active{
+background:#e2d7da;
+color:white;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .draft-container {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .draft-input {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .draft-textarea {
+    height: 200px;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .story-editor {
+    height: 200px !important;
+  }
+
+  .save-btn, .preview-btn, .publish-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .cat-btn, .sub-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .draft-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .bottom-actions {
+    flex-direction: column;
+  }
+
+  .bottom-actions button {
+    width: 100%;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .draft-container {
+    max-width: 100%;
+    margin: 10px auto;
+    padding: 12px;
+  }
+
+  .draft-input {
+    padding: 8px;
+    font-size: 13px;
+    margin: 10px 0;
+  }
+
+  .draft-textarea {
+    height: 150px;
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .story-editor {
+    height: 150px !important;
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 14px;
+  }
+
+  .save-btn, .preview-btn, .publish-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  .cat-btn, .sub-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .next-btn-wrapper {
+    margin-top: 15px;
+  }
+
+  .next-btn {
+    width: 100%;
+  }
+
+  .back-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .bottom-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bottom-actions button {
+    width: 100%;
+  }
+}
