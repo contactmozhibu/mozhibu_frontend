@@ -81,7 +81,7 @@ export default function AgeFilter({
 }
 */
 
-import "./ageFilter.css";
+import "./AgeFilter.css";
 
 const AGE_GROUPS = [
   "Kids (0-6)",
