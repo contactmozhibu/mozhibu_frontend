@@ -8,7 +8,10 @@ const socket = io(SOCKET_URL, {
 export const connectSocket = (userId) => {
   if (!socket.connected) {
     socket.connect();
-    socket.emit("join", userId);
+    // Only emit "join" if userId is provided (for authenticated users)
+    if (userId) {
+      socket.emit("join", userId);
+    }
   }
 };
 
@@ -20,6 +23,12 @@ export const onNewNotification = (callback) => {
 export const onFollowUpdate = (callback) => {
   socket.off("follow-updated");
   socket.on("follow-updated", callback);
+};
+
+// ✅ NEW - Listen for story published events for category filtering
+export const onStoryPublished = (callback) => {
+  socket.off("story-published");
+  socket.on("story-published", callback);
 };
 
 export default socket;

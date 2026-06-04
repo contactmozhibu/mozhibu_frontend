@@ -3,15 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/apiConfig";
+import { connectSocket, onStoryPublished } from "../../services/socket.service.js";
 import "./category.css";
 
 export default function Categories() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedTopic, setSelectedTopic] = useState(null);
-  const [stories, setStories] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [subcategories, setSubcategories] = useState([]);
+
+  // ✅ NEW - Connect socket on mount to receive real-time story published events
+  useEffect(() => {
+    connectSocket(null); // Connect socket for category page updates
+    console.log("🔌 Socket connected for category updates");
+  }, []);
   const [categories, setCategories] = useState([
     {
       title: t("categories_fiction") || "Fiction",
@@ -195,15 +200,6 @@ export default function Categories() {
     return translated && translated !== topic.key ? translated : topic.en;
   };
 
-  // Handle topic click - navigate to stories page
-  const handleTopicClick = (categoryTitle, topic) => {
-    const topicName = getTopicDisplay(topic);
-    setSelectedCategory(categoryTitle);
-    setSelectedTopic(topicName);
-    console.log(`📌 Navigating to: ${categoryTitle} → ${topicName}`);
-    navigate(`/stories?category=${encodeURIComponent(categoryTitle)}&topic=${encodeURIComponent(topicName)}`);
-  };
-
   // Recreate categories with fresh translations whenever language changes
   useEffect(() => {
     setCategories([
@@ -381,6 +377,157 @@ export default function Categories() {
     ]);
   }, [i18n.language, t]);
 
+  // Load available subcategories from database
+  useEffect(() => {
+    // ✅ Function to load published stories organized by category
+    const loadSubcategoriesAndUpdateCategories = async () => {
+      try {
+        console.log("📚 Loading published stories organized by category...");
+        
+        // Fetch published stories organized by category (NEW OPTIMIZED ENDPOINT)
+        const publishedDataRes = await axios.get(`${API_BASE_URL}/stories/categories/published`);
+        const publishedCategories = publishedDataRes.data.categories || [];
+        
+        console.log("✅ Fetched", publishedCategories.length, "categories with published stories");
+        
+        // Build a map of category -> subcategories
+        const categorySubcategoriesMap = {};
+        const uniqueSubcategoriesSet = new Set();
+        
+        publishedCategories.forEach((pubCat) => {
+          const categoryTitle = pubCat.category;
+          
+          // Initialize category map
+          if (!categorySubcategoriesMap[categoryTitle]) {
+            categorySubcategoriesMap[categoryTitle] = new Set();
+          }
+          
+          // Add all subcategories from this category
+          if (pubCat.subcategories && Array.isArray(pubCat.subcategories)) {
+            pubCat.subcategories.forEach((sub) => {
+              categorySubcategoriesMap[categoryTitle].add(sub);
+              uniqueSubcategoriesSet.add(sub);
+            });
+          }
+          
+          // Also add topics
+          if (pubCat.topics && Array.isArray(pubCat.topics)) {
+            pubCat.topics.forEach((topic) => {
+              categorySubcategoriesMap[categoryTitle].add(topic);
+              uniqueSubcategoriesSet.add(topic);
+            });
+          }
+        });
+        
+        // Update global subcategories
+        const sortedSubcategories = Array.from(uniqueSubcategoriesSet).sort();
+        console.log("✅ Loaded", sortedSubcategories.length, "unique subcategories from published stories");
+        setSubcategories(sortedSubcategories);
+        
+        // Update categories with subcategories as topics
+        setCategories((prevCategories) => {
+          return prevCategories.map((category) => {
+            const subcatsForCategory = categorySubcategoriesMap[category.title];
+            if (subcatsForCategory && subcatsForCategory.size > 0) {
+              // Add subcategories as topics at the end
+              const existingTopics = category.topics || [];
+              const subcategoryTopics = Array.from(subcatsForCategory)
+                .filter(sub => !existingTopics.some(t => 
+                  typeof t === 'string' ? t === sub : t.en === sub
+                ))
+                .map(sub => ({ en: sub }));
+              
+              return {
+                ...category,
+                topics: [...existingTopics, ...subcategoryTopics]
+              };
+            }
+            return category;
+          });
+        });
+        
+      } catch (err) {
+        console.error("❌ Error loading subcategories:", err);
+        // Fallback: try loading all published stories if the new endpoint isn't available
+        try {
+          console.log("⚠️ Fallback: Loading published stories directly...");
+          const fallbackRes = await axios.get(`${API_BASE_URL}/stories`);
+          
+          const categorySubcategoriesMap = {};
+          const uniqueSubcategoriesSet = new Set();
+          
+          if (Array.isArray(fallbackRes.data)) {
+            fallbackRes.data.forEach((story) => {
+              if (story.subcategories && Array.isArray(story.subcategories)) {
+                story.subcategories.forEach((sub) => {
+                  uniqueSubcategoriesSet.add(sub);
+                  
+                  if (story.category) {
+                    if (!categorySubcategoriesMap[story.category]) {
+                      categorySubcategoriesMap[story.category] = new Set();
+                    }
+                    categorySubcategoriesMap[story.category].add(sub);
+                  }
+                });
+              }
+            });
+          }
+          
+          const sortedSubcategories = Array.from(uniqueSubcategoriesSet).sort();
+          setSubcategories(sortedSubcategories);
+          
+          setCategories((prevCategories) => {
+            return prevCategories.map((category) => {
+              const subcatsForCategory = categorySubcategoriesMap[category.title];
+              if (subcatsForCategory && subcatsForCategory.size > 0) {
+                const existingTopics = category.topics || [];
+                const subcategoryTopics = Array.from(subcatsForCategory)
+                  .filter(sub => !existingTopics.some(t => 
+                    typeof t === 'string' ? t === sub : t.en === sub
+                  ))
+                  .map(sub => ({ en: sub }));
+                
+                return {
+                  ...category,
+                  topics: [...existingTopics, ...subcategoryTopics]
+                };
+              }
+              return category;
+            });
+          });
+        } catch (fallbackErr) {
+          console.error("❌ Fallback also failed:", fallbackErr);
+          setSubcategories([]);
+        }
+      }
+    };
+    
+    // Initial load
+    loadSubcategoriesAndUpdateCategories();
+    
+    // ✅ NEW - Listen for story-published events and refresh subcategories
+    // This ensures newly published stories' subcategories appear as topics immediately
+    onStoryPublished((storyData) => {
+      console.log("📡 Story published event received:", storyData);
+      console.log("🔄 Refreshing subcategories and updating categories...");
+      loadSubcategoriesAndUpdateCategories();
+    });
+    
+  }, []);
+
+  // Handle category click - navigate to CategoryStories page
+  const handleCategoryClick = (categoryTitle) => {
+    console.log(`✅ Navigating to category: ${categoryTitle}`);
+    navigate(`/stories?category=${encodeURIComponent(categoryTitle)}`);
+  };
+
+  // Handle topic click - navigate to CategoryStories page with topic filter
+  const handleTopicClick = (categoryTitle, topic) => {
+    const topicName = getTopicDisplay(topic);
+    console.log(`✅ Navigating to: ${categoryTitle} → ${topicName}`);
+    navigate(`/stories?category=${encodeURIComponent(categoryTitle)}&topic=${encodeURIComponent(topicName)}`);
+  };
+
   if (categories.length === 0) {
     return <div className="categories-container"><p>{t("no_stories") || "No categories found"}</p></div>;
   }
@@ -394,18 +541,18 @@ export default function Categories() {
 
         {categories.map((cat) => (
           <div key={cat.key} className="category-card">
-            <h2>{cat.title}</h2>
+            <h2 
+              onClick={() => handleCategoryClick(cat.title)}
+              style={{ cursor: "pointer", color: "#1f2937" }}
+            >
+              {cat.title}
+            </h2>
 
             <div className="topic-list">
               {cat.topics.map((topic, idx) => (
                 <button
                   key={idx}
-                  className={`topic-chip ${
-                      selectedTopic === getTopicDisplay(topic) &&
-                      selectedCategory === cat.title
-                        ? "active"
-                        : ""
-                    }`}
+                  className="topic-chip"
                   onClick={() => handleTopicClick(cat.title, topic)}
                 >
                   {getTopicDisplay(topic)}

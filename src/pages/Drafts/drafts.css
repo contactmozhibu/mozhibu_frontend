@@ -368,8 +368,8 @@ select {
 }
 
 .back-btn {
-  background: #dc3545;
-  color: white;
+  background: #ede4e5;
+  color: rgb(218, 23, 23);
   border: none;
   padding: 12px 20px;
   border-radius: 6px;
@@ -393,7 +393,7 @@ select {
 
 .back-btn:hover {
   background: #ff0066;
-  color: rgb(253, 246, 246);
+  color: rgb(18, 4, 4);
   border-color: #ff0066;
 }
 

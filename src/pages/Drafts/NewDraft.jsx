@@ -122,6 +122,11 @@ export default function NewDraft() {
 
       setContent(draft.content || "");
       setSubcategories(draft.subcategories || []);
+      
+      // ✅ AUTO-ENABLE TANGLISH IF DRAFT WAS IN TAMIL
+      if (draft.language === "Tamil" && !isTanglishMode) {
+        toggleTanglishMode();
+      }
     };
 
     loadDraft();
@@ -200,6 +205,15 @@ export default function NewDraft() {
   // Auto-translate title, description, and content when language changes in the draft
   const handleLanguageChangeWithAutoTranslate = async (language) => {
     setFormData(prev => ({ ...prev, language }));
+    
+    // ✅ AUTO-ENABLE TANGLISH WHEN TAMIL IS SELECTED
+    if (language === "Tamil" && !isTanglishMode) {
+      toggleTanglishMode(); // Automatically enable tanglish for Tamil
+    }
+    // ✅ AUTO-DISABLE TANGLISH WHEN SWITCHING AWAY FROM TAMIL
+    else if (language !== "Tamil" && isTanglishMode) {
+      toggleTanglishMode(); // Disable tanglish when not using Tamil
+    }
     
     if (language === "Tamil" && (formData.title || formData.description || content)) {
       setIsTranslating(true);
@@ -284,6 +298,16 @@ export default function NewDraft() {
   const publishStory = async () => {
     if (!formData.title) {
       alert(t("draft_alert_title_content") || "Title required");
+      return;
+    }
+
+    if (!formData.category) {
+      alert("Please select a category before publishing");
+      return;
+    }
+
+    if (!formData.ageCategory) {
+      alert("Please select an age category before publishing");
       return;
     }
 
@@ -402,25 +426,7 @@ export default function NewDraft() {
           {isTranslating && <span style={{ marginLeft: "10px", color: "#ff3b5c" }}>{t("loading") || "Translating..."}</span>}
         </div>
 
-        {/* Tanglish Mode Toggle - Only show when Tamil is selected */}
-        {formData.language === "Tamil" && (
-          <div style={{ marginTop: "15px", padding: "10px", backgroundColor: "#f0f0f0", borderRadius: "5px" }}>
-            <label style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
-              <input
-                type="checkbox"
-                checked={isTanglishMode}
-                onChange={toggleTanglishMode}
-                style={{ marginRight: "10px", cursor: "pointer" }}
-              />
-              <span>{t("tanglish_mode") || "🎯 Tanglish Mode (Type English, auto-convert to Tamil)"}</span>
-            </label>
-            {isTanglishMode && (
-              <div style={{ marginTop: "8px", fontSize: "12px", color: "#666" }}>
-                Example: Type "Vanakkam" → வணக்கம் | "En peyar" → என் பெயர்
-              </div>
-            )}
-          </div>
-        )}
+        {/* ✅ Tanglish Mode - Automatically Enabled for Tamil (Silent Mode - No Message Shown) */}
 
         <input
           name="coverImage"
@@ -459,20 +465,7 @@ export default function NewDraft() {
   <h2>{t("draft_write_story")}</h2>
 </div>
 
-        {/* Tanglish Mode Info for Story Content */}
-        {formData.language === "Tamil" && isTanglishMode && (
-          <div style={{ 
-            marginBottom: "15px", 
-            padding: "12px", 
-            backgroundColor: "#e8f4f8", 
-            borderLeft: "4px solid #ff3b5c",
-            borderRadius: "4px",
-            fontSize: "13px"
-          }}>
-            <strong>💬 Tanglish Mode Active:</strong> Type in English and it will be converted to Tamil. 
-            Examples: "vanakkam", "en peyar", "kathai", etc.
-          </div>
-        )}
+        {/* ✅ Tanglish Mode - Automatically Enabled for Tamil (Silent Mode - No Message Shown) */}
 
         <textarea
           className="story-editor"
