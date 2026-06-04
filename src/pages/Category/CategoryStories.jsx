@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/apiConfig";
 import "./category.css";
 
 export default function CategoryStories() {
@@ -20,7 +21,7 @@ export default function CategoryStories() {
     const fetchStories = async () => {
       try {
         setLoading(true);
-        let url = `http://localhost:5000/api/stories?category=${encodeURIComponent(
+        let url = `${API_BASE_URL}/stories?category=${encodeURIComponent(
           category
         )}&topic=${encodeURIComponent(topic)}`;
         

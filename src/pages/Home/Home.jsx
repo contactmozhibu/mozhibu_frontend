@@ -84,6 +84,8 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./home.css";
 
+import { API_BASE_URL } from "../../config/apiConfig";
+
 export default function Home() {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -93,7 +95,7 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5000/api/stories", {
+    fetch(`${API_BASE_URL}/stories`, {
       headers: token
         ? { Authorization: `Bearer ${token}` }
         : {},

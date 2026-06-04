@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import api from "../../services/api";
+import { getImageUrl } from "../../config/apiConfig";
 import "./authorProfile.css";
 
 export default function AuthorProfile() {
@@ -144,7 +145,7 @@ const refreshLoggedUser = async () => {
           <img
             src={
               author?.avatar
-                ? `http://localhost:5000${author.avatar}`
+                ? getImageUrl(author.avatar)
                 : "https://via.placeholder.com/300x300?text=No+Image"
             }
             alt={author.username}

@@ -1,4 +1,6 @@
-const BASE = "http://localhost:5000/api/stories";
+import { API_BASE_URL } from "../config/apiConfig";
+
+const BASE = `${API_BASE_URL}/stories`;
 
 export const submitRating = async (storyId, rating, token) => {
   const res = await fetch(`${BASE}/${storyId}/rate`, {

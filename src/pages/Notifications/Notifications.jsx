@@ -8,7 +8,7 @@ import {
   markAsRead,
   markAllRead
 } from "../../services/notification.service";
-import "./Notifications.css";
+import { getImageUrl } from "../../config/apiConfig";
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
@@ -115,7 +115,7 @@ const loadFollowing = async () => {
           <img
             src={
               n.fromUser?.avatar 
-                ? `http://localhost:5000${n.fromUser.avatar}`
+                ? getImageUrl(n.fromUser.avatar)
                 : "https://via.placeholder.com/50"
             }
             alt=""
@@ -167,7 +167,7 @@ const loadFollowing = async () => {
               <img
                 src={
                   authorStats?.avatar
-                    ? `http://localhost:5000${authorStats.avatar}`
+                    ? getImageUrl(authorStats.avatar)
                     : "https://via.placeholder.com/100"
                 }
                 alt={authorStats.username}
@@ -222,7 +222,7 @@ const loadFollowing = async () => {
                         <img
                           src={
                             follower.avatar
-                              ? `http://localhost:5000${follower.avatar}`
+                              ? getImageUrl(follower.avatar)
                               : "https://via.placeholder.com/40"
                           }
                           alt={follower.username}
@@ -263,7 +263,7 @@ const loadFollowing = async () => {
                         <img
                           src={
                             following.avatar
-                              ? `http://localhost:5000${following.avatar}`
+                              ? getImageUrl(following.avatar)
                               : "https://via.placeholder.com/40"
                           }
                           alt={following.username}

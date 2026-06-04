@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getStoryById } from "../../services/story.service";
+import { getImageUrl } from "../../config/apiConfig";
 import api from "../../services/api";
 import "./storyDetail.css";
 
@@ -236,7 +237,7 @@ const StoryDetail = () => {
             <div className="author-avatar">
               {story.author.avatar ? (
                 <img 
-                  src={`http://localhost:5000${story.author.avatar}`}
+                  src={getImageUrl(story.author.avatar)}
                   alt={story.author.username}
                   style={{ width: "100%", height: "100%", borderRadius: "50%", objectFit: "cover" }}
                 />

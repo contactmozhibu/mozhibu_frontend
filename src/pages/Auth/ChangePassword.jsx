@@ -30,6 +30,7 @@
 */
 
 import { useState } from "react";
+import { API_BASE_URL } from "../../config/apiConfig";
 
 export default function ChangePassword() {
   const [oldPassword, setOldPassword] = useState("");
@@ -52,7 +53,7 @@ export default function ChangePassword() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/change-password", {
+      const res = await fetch(`${API_BASE_URL}/auth/change-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

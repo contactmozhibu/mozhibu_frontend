@@ -68,7 +68,9 @@ export default function RatingModal({ open, onClose, storyId, onSuccess }) {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:5000/api/reviews", {
+import { API_BASE_URL } from "../../config/apiConfig";
+
+      await axios.post(`${API_BASE_URL}/reviews`, {
         storyId,
         rating,
         comment,

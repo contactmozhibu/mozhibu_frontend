@@ -1,7 +1,7 @@
-/*
 import axios from "axios";
+import { API_BASE_URL } from "../config/apiConfig";
 
-const API = "http://localhost:5000/api/notifications";
+const API = `${API_BASE_URL}/notifications`;
 
 const authHeader = () => ({
   headers: {

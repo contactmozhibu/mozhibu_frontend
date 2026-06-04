@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+import { getImageUrl } from "../../config/apiConfig";
 import toast from "react-hot-toast";
 import "./accountDetails.css";
 
@@ -153,7 +154,7 @@ if (!user) return <p>Loading...</p>;
   src={
     avatarPreview ||
     (user.avatar
-      ? `http://localhost:5000${user.avatar}`
+      ? getImageUrl(user.avatar)
       : "https://via.placeholder.com/300x400?text=No+Image")
   }
   alt="Profile"

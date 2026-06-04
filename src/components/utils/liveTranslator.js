@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_BASE_URL } from "../../config/apiConfig";
 
 // calls our backend translate API
 export const translateLive = async (text, targetLang) => {
@@ -8,7 +9,7 @@ export const translateLive = async (text, targetLang) => {
     const token = localStorage.getItem("token");
 
     const res = await axios.post(
-      "http://localhost:5000/api/translate",
+      `${API_BASE_URL}/translate`,
       { text, targetLang },
       {
         headers: {

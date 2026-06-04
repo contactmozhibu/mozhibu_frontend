@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../../config/apiConfig";
 import "./drafts.css";
 
 export default function DraftList() {
@@ -16,14 +17,14 @@ export default function DraftList() {
   const loadData = async () => {
     try {
       // ✅ Load drafts
-      const dRes = await fetch("http://localhost:5000/api/drafts", {
+      const dRes = await fetch(`${API_BASE_URL}/drafts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const draftsData = await dRes.json();
       setDrafts(draftsData);
 
       // ✅ Load published stories
-      const sRes = await fetch("http://localhost:5000/api/stories/mine", {
+      const sRes = await fetch(`${API_BASE_URL}/stories/mine`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const storiesData = await sRes.json();
@@ -38,7 +39,7 @@ export default function DraftList() {
   ====================== */
   const publishDraft = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/drafts/${id}/publish`, {
+      const res = await fetch(`${API_BASE_URL}/drafts/${id}/publish`, {
   method: "PUT",
   headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -62,7 +63,7 @@ export default function DraftList() {
     if (!window.confirm("Delete this draft?")) return;
 
     try {
-      await fetch(`http://localhost:5000/api/drafts/${id}`, {
+      await fetch(`${API_BASE_URL}/drafts/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

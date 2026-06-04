@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { translateText } from "../../services/translate.service";
 import { convertTanglishToTamil, transliterateToTamil } from "../../utils/tanglishTransliterator";
+import { API_BASE_URL } from "../../config/apiConfig";
 import useTanglishInput from "../../hooks/useTanglishInput";
 import "../../pages/Drafts/drafts.css";
 import AgeFilter from "../../components/filters/AgeFilter";
@@ -101,7 +102,7 @@ export default function NewDraft() {
     const loadDraft = async () => {
       if (!draftId) return;
 
-      const res = await fetch(`http://localhost:5000/api/drafts/${draftId}`, {
+      const res = await fetch(`${API_BASE_URL}/drafts/${draftId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -262,7 +263,7 @@ export default function NewDraft() {
 
     if (!payload.contentType) delete payload.contentType;
 
-    const res = await fetch("http://localhost:5000/api/drafts", {
+    const res = await fetch(`${API_BASE_URL}/drafts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -298,7 +299,7 @@ export default function NewDraft() {
       payload.contentType = "Non-Erotic";
     }
 
-    const res = await fetch("http://localhost:5000/api/stories", {
+    const res = await fetch(`${API_BASE_URL}/stories`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

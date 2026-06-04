@@ -1,14 +1,15 @@
+import { API_BASE_URL } from "../config/apiConfig";
 
 /*
 export const getStoryById = async (id) => {
-  const res = await fetch(`http://localhost:5000/api/stories/${id}`);
+  const res = await fetch(`${API_BASE_URL}/stories/${id}`);
   if (!res.ok) throw new Error("Failed to load story");
   return res.json();
 };
 */
 // now executable code 
 export const getStoryById = async (id) => {
-  const res = await fetch(`http://localhost:5000/api/stories/${id}`);
+  const res = await fetch(`${API_BASE_URL}/stories/${id}`);
   if (!res.ok) {
     throw new Error("Failed to load story");
   }

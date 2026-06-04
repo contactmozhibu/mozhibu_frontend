@@ -94,10 +94,12 @@ export default function AddChapter() {
 
   const token = localStorage.getItem("token");
 
+import { API_BASE_URL } from "../../config/apiConfig";
+
   const handleAdd = async () => {
     try {
       await axios.post(
-        `http://localhost:5000/api/chapters/${storyId}`,   // ✅ FULL URL
+        `${API_BASE_URL}/chapters/${storyId}`,   // ✅ FULL URL
         { title, content },
         {
           headers: {
