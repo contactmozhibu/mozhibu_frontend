@@ -1,6 +1,6 @@
 // Centralized API configuration
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-export const SOCKET_URL = import.meta.env.VITE_API_URL?.replace("/api", "") || "http://localhost:5000";
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "https://mozhibu-backend.onrender.com";
+export const SOCKET_URL = import.meta.env.VITE_API_URL?.replace("/api", "") || "https://mozhibu-backend.onrender.com";
 
 // Helper function to get full URL for avatars and uploads
 export const getImageUrl = (path) => {
