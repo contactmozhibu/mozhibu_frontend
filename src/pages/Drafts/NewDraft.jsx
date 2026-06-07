@@ -284,9 +284,18 @@ export default function NewDraft() {
   const saveDraft = async () => {
     if (!validateBeforeSubmit()) return;
 
-    const payload = { ...formData, content, subcategories };
+    const payload = {
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      category: formData.category.trim(),
+      ageCategory: formData.ageCategory.trim(),
+      contentType: formData.contentType || "Non-Erotic",
+      language: formData.language,
+      content: content.trim(),
+      subcategories
+    };
 
-    if (!payload.contentType) delete payload.contentType;
+    console.log("💾 Saving draft with payload:", payload);
 
     const res = await fetch(`${API_BASE_URL}/drafts`, {
       method: "POST",
@@ -298,11 +307,18 @@ export default function NewDraft() {
     });
 
     if (!res.ok) {
-      alert(t("draft_alert_save_fail"));
+      try {
+        const errorData = await res.json();
+        const errorMsg = errorData.message || "Failed to save draft";
+        console.error("❌ Server error:", errorData);
+        alert(`Error: ${errorMsg}`);
+      } catch (e) {
+        alert(t("draft_alert_save_fail") || "Failed to save draft");
+      }
       return;
     }
 
-    alert(t("draft_alert_saved"));
+    alert(t("draft_alert_saved") || "Draft saved successfully!");
     navigate("/drafts");
   };
 
@@ -322,17 +338,31 @@ export default function NewDraft() {
       return;
     }
 
+    // ✅ Validate contentType for adult ages
+    if (
+      (formData.ageCategory.includes("18") || 
+       formData.ageCategory.includes("Adults") ||
+       formData.ageCategory === "Young Adults (18-25)" ||
+       formData.ageCategory === "Adults (26+)") &&
+      !formData.contentType
+    ) {
+      alert("Please select content type (Erotic/Non-Erotic) for adult content");
+      return;
+    }
+
     const payload = {
-      ...formData,
-      content,
-      storyType: "multi", // Default to multi-chapter
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      category: formData.category.trim(),
+      ageCategory: formData.ageCategory.trim(),
+      contentType: formData.contentType || "Non-Erotic",
+      language: formData.language,
+      content: content.trim(),
+      storyType: "multi",
       subcategories
     };
 
-    // ✅ Auto-fix contentType
-    if (!payload.contentType || payload.contentType.trim() === "") {
-      payload.contentType = "Non-Erotic";
-    }
+    console.log("📝 Publishing story with payload:", payload);
 
     const res = await fetch(`${API_BASE_URL}/stories`, {
       method: "POST",
@@ -344,7 +374,14 @@ export default function NewDraft() {
     });
 
     if (!res.ok) {
-      alert(t("draft_alert_publish_fail") || "Failed to publish");
+      try {
+        const errorData = await res.json();
+        const errorMsg = errorData.message || "Failed to publish story";
+        console.error("❌ Server error:", errorData);
+        alert(`Error: ${errorMsg}`);
+      } catch (e) {
+        alert(t("draft_alert_publish_fail") || "Failed to publish story");
+      }
       return;
     }
 
