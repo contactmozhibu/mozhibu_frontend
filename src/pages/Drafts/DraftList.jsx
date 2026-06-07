@@ -95,23 +95,24 @@ export default function DraftList() {
 
               <div className="draft-actions">
                 <button
-  onClick={() => {
-    if (
-      (draft.ageCategory?.includes("18") ||
-        draft.ageCategory?.includes("Adults")) &&
-      !draft.contentType
-    ) {
-      toast.error("Select Erotic / Non-Erotic before publishing");
-      return;
-    }
-    publishDraft(draft._id);
-  }}
->
-  Publish
-</button>
-
+                  className="action-btn publish-btn"
+                  onClick={() => {
+                    if (
+                      (draft.ageCategory?.includes("18") ||
+                        draft.ageCategory?.includes("Adults")) &&
+                      !draft.contentType
+                    ) {
+                      toast.error("Select Erotic / Non-Erotic before publishing");
+                      return;
+                    }
+                    publishDraft(draft._id);
+                  }}
+                >
+                  Publish
+                </button>
 
                 <button
+                  className="action-btn edit-btn"
                   onClick={() =>
                     navigate(`/draft/new?id=${draft._id}`)
                   }
@@ -119,7 +120,10 @@ export default function DraftList() {
                   Edit
                 </button>
 
-                <button onClick={() => deleteDraft(draft._id)}>
+                <button 
+                  className="action-btn delete-btn"
+                  onClick={() => deleteDraft(draft._id)}
+                >
                   Delete
                 </button>
               </div>

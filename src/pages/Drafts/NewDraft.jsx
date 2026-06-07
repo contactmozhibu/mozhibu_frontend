@@ -151,11 +151,54 @@ export default function NewDraft() {
   /* ======================
      HANDLE COVER IMAGE UPLOAD
   ====================== */
-  const handleCoverImageChange = (e) => {
+  const handleCoverImageChange = async (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      // Store the file object
-      setFormData(prev => ({ ...prev, coverImage: file }));
+    if (!file) return;
+
+    // Validate file
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      alert("Image size must be less than 5MB");
+      return;
+    }
+
+    const validTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!validTypes.includes(file.type)) {
+      alert("Only JPG, PNG, WebP, and GIF images are allowed");
+      return;
+    }
+
+    // Create FormData for upload
+    const formData = new FormData();
+    formData.append("coverImage", file);
+
+    try {
+      console.log("📤 Uploading cover image...");
+      const res = await fetch(`${API_BASE_URL}/upload/cover`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        alert(`Upload failed: ${error.message}`);
+        return;
+      }
+
+      const data = await res.json();
+      console.log("✅ Cover image uploaded:", data.imageUrl);
+      
+      // Store the image URL in formData
+      setFormData(prev => ({ 
+        ...prev, 
+        coverImage: data.imageUrl 
+      }));
+    } catch (error) {
+      console.error("❌ Upload error:", error);
+      alert("Failed to upload cover image");
     }
   };
 
@@ -359,7 +402,8 @@ export default function NewDraft() {
       language: formData.language,
       content: content.trim(),
       storyType: "multi",
-      subcategories
+      subcategories,
+      coverImage: formData.coverImage || ""
     };
 
     console.log("📝 Publishing story with payload:", payload);

@@ -46,10 +46,14 @@
 }
 
 .draft-card {
-  background: #fafafa;
-  padding: 15px;
+  background: #ffffff;
+  padding: 20px 24px;
   margin: 15px 0;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 600px;
+  min-height: 130px;
 }
 
 /* Buttons container */
@@ -100,9 +104,12 @@
 
 .draft-card {
   background: #ffffff;
-  padding: 16px;
+  padding: 20px 24px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 600px;
+  min-height: 130px;
 }
 
 .draft-meta {
@@ -128,20 +135,64 @@
 
 
 .draft-actions {
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-
-
-.edit-btn {
-  background: #ffc107;
+/* Action buttons base styles */
+.action-btn {
+  border: none;
+  padding: 12px 32px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 0 0 auto;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-block;
+  min-width: 120px;
 }
 
-.delete-btn {
-  background: #dc3545;
+/* Publish button - Green */
+.action-btn.publish-btn {
+  background: linear-gradient(135deg, #28a745, #20c997);
   color: white;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.action-btn.publish-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
+}
+
+/* Edit button - Blue */
+.action-btn.edit-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.action-btn.edit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+}
+
+/* Delete button - Red */
+.action-btn.delete-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.action-btn.delete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
 }
 
 .draft-actions button {
@@ -222,11 +273,10 @@
 =============================== */
 
 .draft-container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
+  max-width: 700px;   /* was 800px */
+  margin: 40px auto;
+  padding: 20px 30px;
 }
-
 .draft-container h2 {
   margin-bottom: 20px;
 }

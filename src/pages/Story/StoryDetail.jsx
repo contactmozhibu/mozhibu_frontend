@@ -168,7 +168,7 @@ const StoryDetail = () => {
         {/* COVER IMAGE - LEFT SIDE */}
         <div className="story-cover-wrapper">
           <img
-            src={story.coverImage || "https://via.placeholder.com/300x400"}
+            src={getImageUrl(story.coverImage)}
             alt={story.title}
             className="story-cover"
           />

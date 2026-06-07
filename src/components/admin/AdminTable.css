@@ -27,6 +27,10 @@
   letter-spacing: 0.5px;
 }
 
+.admin-table th:last-child {
+  text-align: center;
+}
+
 .admin-table tbody tr {
   border-bottom: 1px solid #f0f0f0;
   transition: background 0.2s ease;
@@ -41,6 +45,10 @@
   color: #333;
 }
 
+.admin-table td:last-child {
+  text-align: center;
+}
+
 .table-loading,
 .table-empty {
   background: white;
@@ -51,60 +59,68 @@
   font-size: 1.1rem;
 }
 
-.action-buttons {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-}
-
 .action-btn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
+  padding: 4px 6px;
+  border: none !important;
+  outline: none !important;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
   transition: all 0.2s ease;
+  background: transparent !important;
+  box-shadow: none !important;
+  line-height: 1;
+  min-width: unset;
+  width: auto;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0px;
+  justify-content: center;
+  align-items: center;
 }
 
 .action-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
+  background: #f0f0f0;
 }
 
 .action-view {
-  background: #e3f2fd;
+  background: transparent;
   color: #1976d2;
 }
 
 .action-view:hover {
-  background: #bbdefb;
+  background: #f0f0f0;
 }
 
 .action-edit {
-  background: #fff3e0;
+  background: transparent;
   color: #f57c00;
 }
 
 .action-edit:hover {
-  background: #ffe0b2;
+  background: #f0f0f0;
 }
 
 .action-delete {
-  background: #ffebee;
+  background: transparent;
   color: #d32f2f;
 }
 
 .action-delete:hover {
-  background: #ffcdd2;
+  background: #f0f0f0;
 }
 
 .action-block {
-  background: #fce4ec;
+  background: transparent;
   color: #c2185b;
 }
 
 .action-block:hover {
-  background: #f8bbd0;
+  background: #f0f0f0;
 }
 
 @media (max-width: 768px) {
@@ -117,8 +133,14 @@
     padding: 10px;
   }
 
+  .admin-table th:last-child,
+  .admin-table td:last-child {
+    text-align: center;
+    padding-left: 15px;
+  }
+
   .action-btn {
-    padding: 4px 8px;
-    font-size: 0.7rem;
+    padding: 3px 6px;
+    font-size: 0.85rem;
   }
 }

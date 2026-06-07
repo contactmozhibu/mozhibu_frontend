@@ -69,7 +69,7 @@ export default function Home() {
                 onClick={() => navigate(`/story/${story._id}`)}
               >
                 <img
-                  src={story.coverImage || "/placeholder.jpg"}
+                  src={getImageUrl(story.coverImage)}
                   alt={story.title}
                 />
 
@@ -102,7 +102,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./home.css";
 
-import { API_BASE_URL } from "../../config/apiConfig";
+import { API_BASE_URL, getImageUrl } from "../../config/apiConfig";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -195,8 +195,7 @@ export default function Home() {
               >
                 <img
                   src={
-                    story.coverImage ||
-                    "/placeholder.jpg"
+                    getImageUrl(story.coverImage)
                   }
                   alt={story.title}
                 />
