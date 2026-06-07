@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { login } from "../../services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 import "./auth.css";
@@ -6,6 +6,7 @@ import "./auth.css";
 export default function Login() {
   const navigate = useNavigate();
 
+  const [loginType, setLoginType] = useState("user"); // "user" or "admin"
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -14,32 +15,54 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Check if coming from signup with admin flag
+  useEffect(() => {
+    if (window.sessionStorage.getItem("adminLogin") === "true") {
+      setLoginType("admin");
+      window.sessionStorage.removeItem("adminLogin");
+    }
+  }, []);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setError("");
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
-  setLoading(true);
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-  try {
-    const res = await login(form);
-    
-    console.log("LOGIN RESPONSE:", res.data);
-    
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("user", JSON.stringify(res.data.user));
-    
-    navigate("/");
-  } catch (err) {
-    setLoading(false);
-    
-    const errorMsg = err.response?.data?.message || "Login failed";
-    setError("❌ " + errorMsg);
-  }
-};
+    try {
+      const res = await login(form);
+      
+      console.log("LOGIN RESPONSE:", res.data);
+      
+      // Check if user is admin for admin login
+      if (loginType === "admin") {
+        if (res.data.user.role !== "admin") {
+          setLoading(false);
+          setError("❌ This account is not an admin account. Please use user login.");
+          return;
+        }
+      }
+      
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      
+      // Navigate to admin dashboard if admin login, else user home
+      if (loginType === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+      setLoading(false);
+      
+      const errorMsg = err.response?.data?.message || "Login failed";
+      setError("❌ " + errorMsg);
+    }
+  };
 
   return (
     <div className="auth-neon-page">
@@ -87,13 +110,31 @@ export default function Login() {
           </div>
 
           <button type="submit" className="auth-btn" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Logging in..." : `Login as ${loginType === "admin" ? "Admin" : "User"}`}
           </button>
         </form>
 
-        <p className="auth-link">
-          Don’t have an account? <Link to="/signup">Create account</Link>
-        </p>
+        {loginType === "user" && (
+          <p className="auth-link">
+            Don't have an account? <Link to="/signup">Create account</Link>
+          </p>
+        )}
+
+        {loginType === "user" && (
+          <p className="auth-link" style={{ textAlign: "center", marginTop: "16px" }}>
+            <Link to="#" onClick={(e) => { e.preventDefault(); setLoginType("admin"); }} style={{ color: "#17a2b8", textDecoration: "none", fontWeight: "500" }}>
+              Admin Login?
+            </Link>
+          </p>
+        )}
+
+        {loginType === "admin" && (
+          <p className="auth-link" style={{ textAlign: "center", marginTop: "16px" }}>
+            <Link to="#" onClick={(e) => { e.preventDefault(); setLoginType("user"); }} style={{ color: "#17a2b8", textDecoration: "none", fontWeight: "500" }}>
+              Back to User Login
+            </Link>
+          </p>
+        )}
       </div>
     </div>
   );

@@ -67,7 +67,14 @@ useEffect(() => {
     <header className="header">
       
       <div className="left-group">
-        <div className="logo">{t("app_name")}</div>
+        <Link to="/" className="logo-link">
+          <img 
+            src="/logo.png?v=1" 
+            alt="Mozhibu Logo" 
+            className="logo-img"
+            style={{ maxWidth: '40px', maxHeight: '40px' }}
+          />
+        </Link>
         <select
           className="language-select"
           value={i18n.language}
@@ -238,7 +245,15 @@ export default function Header() {
     <header className="header">
       {/* LEFT: LOGO + LANGUAGE */}
       <div className="left-group">
-        <div className="logo">{t("app_name")}</div>
+        <Link to="/" className="logo-link">
+          <img 
+            src="/logo.png?v=1" 
+            alt="Mozhibu Logo" 
+            className="logo-img"
+            style={{ maxWidth: '40px', maxHeight: '40px' }}
+          />
+          <span className="logo-text">Mozhibu</span>
+        </Link>
         <select
           className="language-select"
           value={i18n.language}

@@ -30,6 +30,30 @@
   cursor: pointer;
 }
 
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.logo-img {
+  width: 40px !important;
+  height: 40px !important;
+  object-fit: contain;
+  display: block !important;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #16a085;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
 /* -------- Language Dropdown -------- */
 .language-select {
   height: 36px;
@@ -59,8 +83,7 @@
 
   border-radius: 20px;
   border: 1px solid #e6eef0;
-  background: #f6f9fb;
-  flex-shrink: 0;
+  background: #f6f9fb
 }
 
 .search-box svg {
@@ -81,6 +104,7 @@
 .search-box input::placeholder {
   color: #97a3a8;
 }
+
 
 /* ================= NAV RIGHT ================= */
 .nav {
@@ -118,9 +142,9 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #ef4444;
+  background: #eae6e6;
   border: none;
-  color: #ffffff;
+  color: #100f0f;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -131,21 +155,21 @@
 }
 
 .notif-btn:hover {
-  background: #dc2626;
+  background: #ece8e8;
   box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
 }
 
 .notif-btn svg {
   width: 24px;
   height: 24px;
-  color: #ffffff;
+  color: #0d0d0d;
 }
 
 .notif-count {
   position: absolute;
   top: -8px;
   right: -8px;
-  background: #fecaca;
+  background: #191919;
   color: #991b1b;
   font-size: 11px;
   font-weight: 700;

@@ -98,7 +98,7 @@ export default function Home() {
 */
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./home.css";
 
@@ -106,6 +106,7 @@ import { API_BASE_URL } from "../../config/apiConfig";
 
 export default function Home() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   // ✅ Get i18n also
   const { t, i18n } = useTranslation();
@@ -120,16 +121,22 @@ export default function Home() {
     const selectedLanguage =
       i18n.language === "ta" ? "Tamil" : "English";
 
+    // ✅ Get search query from URL
+    const searchQuery = searchParams.get("q") || "";
+
     setLoading(true);
 
-    fetch(
-      `${API_BASE_URL}/stories?language=${selectedLanguage}`,
-      {
-        headers: token
-          ? { Authorization: `Bearer ${token}` }
-          : {},
-      }
-    )
+    // ✅ Build URL with language and search
+    let url = `${API_BASE_URL}/stories?language=${selectedLanguage}`;
+    if (searchQuery) {
+      url += `&search=${encodeURIComponent(searchQuery)}`;
+    }
+
+    fetch(url, {
+      headers: token
+        ? { Authorization: `Bearer ${token}` }
+        : {},
+    })
       .then(async (res) => {
         const data = await res.json();
 
@@ -156,7 +163,7 @@ export default function Home() {
       })
       .finally(() => setLoading(false));
 
-  }, [i18n.language]); // ✅ Reload when language changes
+  }, [i18n.language, searchParams]); // ✅ Reload when language or search changes
 
   return (
     <>
@@ -166,7 +173,11 @@ export default function Home() {
       </section>
 
       <section className="stories-section">
-        <h2>{t("all_stories")}</h2>
+        <h2>
+          {searchParams.get("q")
+            ? `Search Results for "${searchParams.get("q")}"`
+            : t("all_stories")}
+        </h2>
 
         {loading ? (
           <p>Loading stories...</p>

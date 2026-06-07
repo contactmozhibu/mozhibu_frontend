@@ -110,6 +110,13 @@ const [dob, setDob] = useState("");
         <p className="auth-link">
           Already have an account? <Link to="/login">Login</Link>
         </p>
+
+        {/* Admin Login Link */}
+        <div style={{ marginTop: "16px", paddingTop: "16px", borderTop: "1px solid #ddd" }}>
+          <p style={{ textAlign: "center", fontSize: "13px", color: "#666", marginBottom: "8px" }}>
+            Admin? <Link to="/login" onClick={() => { window.sessionStorage.setItem("adminLogin", "true"); }} style={{ color: "#ff6b6b", fontWeight: "600", textDecoration: "none" }}>Login here</Link>
+          </p>
+        </div>
       </form>
     </div>
   );

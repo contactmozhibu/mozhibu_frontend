@@ -233,7 +233,7 @@ export default function Categories() {
         ],
       },
       {
-        title: t("non_fiction") || "Non-Fiction",
+        title: t("Non Fiction") || "Non-Fiction",
         key: "nonfiction",
         topics: [
           { key: "categories_biography", en: "Biography" },

@@ -1,0 +1,128 @@
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.admin-dashboard h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.activity-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.activity-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.activity-card h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
+  transition: all 0.2s ease;
+}
+
+.activity-item:hover {
+  background: #f0f1fa;
+  transform: translateX(5px);
+}
+
+.activity-info {
+  flex: 1;
+}
+
+.activity-title {
+  margin: 0;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.activity-meta {
+  margin: 3px 0 0 0;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.activity-date {
+  color: #999;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.empty-state {
+  text-align: center;
+  color: #999;
+  padding: 20px;
+  margin: 0;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .activity-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard h2 {
+    font-size: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .activity-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .activity-date {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}

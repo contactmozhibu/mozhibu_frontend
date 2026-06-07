@@ -143,9 +143,20 @@ export default function NewDraft() {
         const processedValue = handleTanglishChange(value);
         updated[name] = processedValue;
       }
-      
+
       return updated;
     });
+  };
+
+  /* ======================
+     HANDLE COVER IMAGE UPLOAD
+  ====================== */
+  const handleCoverImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Store the file object
+      setFormData(prev => ({ ...prev, coverImage: file }));
+    }
   };
 
   // Auto-translate content when Tamil is selected
@@ -428,12 +439,43 @@ export default function NewDraft() {
 
         {/* ✅ Tanglish Mode - Automatically Enabled for Tamil (Silent Mode - No Message Shown) */}
 
-        <input
-          name="coverImage"
-          placeholder={t("draft_cover")}
-          value={formData.coverImage}
-          onChange={handleChange}
-        />
+        {/* COVER IMAGE UPLOAD */}
+        <div className="cover-image-section">
+          <div className="cover-image-label">
+            <span>📸 {t("draft_cover") || "Cover Image"}</span>
+            <span className="copyright-note">⚠️ Upload copyright free images only</span>
+          </div>
+
+          {/* FILE INPUT */}
+          <label className="file-upload-label">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleCoverImageChange}
+              style={{ display: "none" }}
+            />
+            <span className="upload-btn">📁 Choose Image</span>
+          </label>
+
+          {/* PREVIEW */}
+          {formData.coverImage && (
+            <div className="image-preview">
+              <img
+                src={typeof formData.coverImage === "string" 
+                  ? formData.coverImage 
+                  : URL.createObjectURL(formData.coverImage)}
+                alt="Cover preview"
+              />
+              <button 
+                type="button"
+                onClick={() => setFormData(prev => ({ ...prev, coverImage: "" }))}
+                className="remove-image-btn"
+              >
+                ✕ Remove
+              </button>
+            </div>
+          )}
+        </div>
 
         <div className="next-btn-wrapper">
           <button className="next-btn" onClick={() => setStep(2)} disabled={isTranslating}>

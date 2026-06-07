@@ -150,6 +150,10 @@ textarea {
   display: flex;
   justify-content: center;
   margin-bottom: 25px;
+  position: relative;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .avatar-wrapper {
@@ -183,6 +187,32 @@ textarea {
 
 .avatar-wrapper:hover .avatar-overlay {
   opacity: 1;
+}
+
+/* DELETE AVATAR BUTTON */
+.delete-avatar-btn {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  padding: 5px 8px;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.delete-avatar-btn:hover {
+  background: #cc0000;
 }
 
 /* FORM 

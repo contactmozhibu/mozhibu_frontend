@@ -1,5 +1,5 @@
 
-import { Routes, Route,Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -25,19 +25,32 @@ import Signup from "./pages/Auth/SignUp";
 import VerifyOtp from "./pages/Auth/VerifyOtp";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminRoute from "./routes/AdminRoute";
 import AccountDetails from "./pages/Author/AccountDetails";
-
-import AdminDashboard from "./pages/Admin/AdminDashboard";
-import ManageStories from "./pages/Admin/ManageStories";
 
 import Footer from "./components/Footer";
 import AboutUs from "./pages/Static/AboutUs";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import ManageUsers from "./pages/Admin/ManageUsers";
+import ManageStories from "./pages/Admin/ManageStories";
+import ManageChapters from "./pages/Admin/ManageChapters";
+import ManageReviews from "./pages/Admin/ManageReviews";
+import ManageLanguages from "./pages/Admin/ManageLanguages";
+import ManageCategories from "./pages/Admin/ManageCategories";
+import ManageNotifications from "./pages/Admin/ManageNotifications";
+import AdminAnalytics from "./pages/Admin/AdminAnalytics";
+import AdminAuditLogs from "./pages/Admin/AdminAuditLogs";
+import AdminSettings from "./pages/Admin/AdminSettings";
 import ScrollToTop from "./components/ScrollToTop";
 
 import "./styles.css";
 
 export default function App() {
   const { i18n } = useTranslation();
+  const location = useLocation();
+
+  // Check if current path is admin route
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
   // Initialize language on app load
   useEffect(() => {
@@ -51,7 +64,9 @@ export default function App() {
   return (
     <>
       <ScrollToTop />
-      <Header />
+      
+      {/* Only show header and footer on non-admin routes */}
+      {!isAdminRoute && <Header />}
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -85,16 +100,33 @@ export default function App() {
 
           <Route path="/notifications" element={<Notifications />} />
 
-          {/* ADMIN */}
-          <Route path="/admin" element={<AdminLayout />}>
+          {/* ADMIN ROUTES */}
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminLayout />
+              </AdminRoute>
+            }
+          >
             <Route index element={<Navigate to="dashboard" />} />
             <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="users" element={<ManageUsers />} />
             <Route path="stories" element={<ManageStories />} />
+            <Route path="chapters" element={<ManageChapters />} />
+            <Route path="reviews" element={<ManageReviews />} />
+            <Route path="languages" element={<ManageLanguages />} />
+            <Route path="categories" element={<ManageCategories />} />
+            <Route path="notifications" element={<ManageNotifications />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
+            <Route path="audit-logs" element={<AdminAuditLogs />} />
+            <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Route>
       </Routes>
 
-      <Footer />
+      {/* Only show footer on non-admin routes */}
+      {!isAdminRoute && <Footer />}
     </>
   );
 }

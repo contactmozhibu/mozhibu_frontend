@@ -1,14 +1,66 @@
 import { NavLink } from "react-router-dom";
+import "./AdminSidebar.css";
 
 const AdminSidebar = () => {
   return (
-    <aside style={{ width: "220px", background: "#111", color: "#fff" }}>
-      <h3 style={{ padding: "15px" }}>Mozhibu Admin</h3>
+    <aside className="admin-sidebar">
+      <div className="admin-logo">
+        <h2>Mozhibu Admin</h2>
+      </div>
+      
+      <nav className="admin-nav">
+        <div className="nav-section">
+          <h4 className="nav-title">Dashboard</h4>
+          <NavLink to="/admin" className="admin-link" end>
+            📊 Dashboard
+          </NavLink>
+        </div>
 
-      <nav>
-        <NavLink to="/admin" className="admin-link">Dashboard</NavLink>
-        <NavLink to="/admin/users" className="admin-link">Users</NavLink>
-        <NavLink to="/admin/stories" className="admin-link">Stories</NavLink>
+        <div className="nav-section">
+          <h4 className="nav-title">Management</h4>
+          <NavLink to="/admin/users" className="admin-link">
+            👥 Users
+          </NavLink>
+          <NavLink to="/admin/stories" className="admin-link">
+            📖 Stories
+          </NavLink>
+          <NavLink to="/admin/chapters" className="admin-link">
+            📄 Chapters
+          </NavLink>
+          <NavLink to="/admin/languages" className="admin-link">
+            🌐 Languages
+          </NavLink>
+          <NavLink to="/admin/notifications" className="admin-link">
+            🔔 Notifications
+          </NavLink>
+        </div>
+
+        <div className="nav-section">
+          <h4 className="nav-title">Moderation</h4>
+          <NavLink to="/admin/reviews" className="admin-link">
+            💬 Reviews
+          </NavLink>
+          <NavLink to="/admin/categories" className="admin-link">
+            🏷️ Categories
+          </NavLink>
+        </div>
+
+        <div className="nav-section">
+          <h4 className="nav-title">Platform</h4>
+          <NavLink to="/admin/analytics" className="admin-link">
+            📈 Analytics
+          </NavLink>
+          <NavLink to="/admin/audit-logs" className="admin-link">
+            📋 Audit Logs
+          </NavLink>
+        </div>
+
+        <div className="nav-section">
+          <h4 className="nav-title">Settings</h4>
+          <NavLink to="/admin/settings" className="admin-link">
+            ⚙️ Admin Settings
+          </NavLink>
+        </div>
       </nav>
     </aside>
   );

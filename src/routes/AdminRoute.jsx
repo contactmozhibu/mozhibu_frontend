@@ -1,7 +1,12 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const AdminRoute = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div className="loading-container">Loading...</div>;
+  }
 
   if (!user) {
     return <Navigate to="/login" replace />;

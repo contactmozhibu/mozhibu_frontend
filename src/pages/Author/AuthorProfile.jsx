@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import api from "../../services/api";
 import { getImageUrl } from "../../config/apiConfig";
@@ -10,44 +10,50 @@ export default function AuthorProfile() {
   const [author, setAuthor] = useState(null);
   const [stories, setStories] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
 
   const token = localStorage.getItem("token");
   const loggedUser = JSON.parse(localStorage.getItem("user"));
   const isAdmin = loggedUser?.role === "admin";
 
-
   const isMe = !id;
 
+  console.log("AuthorProfile - id:", id, "isMe:", isMe, "isAdmin:", isAdmin, "loggedUser:", loggedUser);
 
   /* =========================
      FETCH AUTHOR + STORIES
   ========================= */
   useEffect(() => {
-  if (!token) {
-    navigate("/login");
-    return;
-  }
+    if (!token) {
+      navigate("/login");
+      return;
+    }
 
-  if (loggedUser?.role === "admin") {
-    navigate("/admin");
-    return;
-  }
+    // Admins trying to view their own profile should go to admin dashboard
+    if (isAdmin && isMe) {
+      console.log("Redirecting admin to admin dashboard (isMe=true)");
+      navigate("/admin");
+      return;
+    }
 
-  const fetchData = async () => {
-    try {
-      let authorRes;
-      let storiesRes;
+    console.log("Fetching author profile for id:", id);
 
-      if (isMe) {
-        authorRes = await api.get("/authors/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+    const fetchData = async () => {
+      try {
+        let authorRes;
+        let storiesRes;
 
-        storiesRes = await api.get("/stories/mine", {
-          headers: { Authorization: `Bearer ${token}` },
+        if (isMe) {
+          authorRes = await api.get("/authors/me", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          storiesRes = await api.get("/stories/mine", {
+            headers: { Authorization: `Bearer ${token}` },
         });
 
         setAuthor(authorRes.data.author);
@@ -84,7 +90,20 @@ export default function AuthorProfile() {
   };
 
   fetchData();
-}, [id, token]);
+}, [id, token, location, refreshTrigger]);
+
+  /* =========================
+     DETECT WHEN USER RETURNS TO PAGE
+  ========================= */
+  useEffect(() => {
+    const handleFocus = () => {
+      console.log("⭐ User returned to AuthorProfile - refreshing data");
+      setRefreshTrigger(prev => prev + 1);
+    };
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, []);
 
 const refreshLoggedUser = async () => {
   try {
@@ -144,9 +163,9 @@ const refreshLoggedUser = async () => {
         <div className="ap-avatar">
           <img
             src={
-              author?.avatar
+              author?.avatar && author.avatar.trim()
                 ? getImageUrl(author.avatar)
-                : "https://via.placeholder.com/300x300?text=No+Image"
+                : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%23222'/%3E%3C/svg%3E"
             }
             alt={author.username}
           />

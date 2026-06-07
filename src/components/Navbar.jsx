@@ -31,7 +31,9 @@ const navigate = useNavigate();
     <nav className="navbar">
       {/* LEFT 
       <div className="nav-left">
-        <h2 className="logo">Mozhibu</h2>
+        <Link to="/">
+          <img src="./logo.png" alt="Mozhibu Logo" className="logo-img" />
+        </Link>
 
         <select className="language-select">
           <option>English</option>
@@ -228,12 +230,21 @@ export default function Navbar() {
 
   const [profileOpen, setProfileOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
 
   const user = JSON.parse(localStorage.getItem("user"));
-const isAdmin = user?.role === "admin";
+  const isAdmin = user?.role === "admin";
+
+  // ✅ Handle search submission
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchInput.trim()) {
+      navigate(`/?q=${encodeURIComponent(searchInput)}`);
+    }
+  };
 
 
   /* 🔔 Load notifications */
@@ -277,9 +288,16 @@ const isAdmin = user?.role === "admin";
     <div className="navbar">
       {/* LEFT */}
       <div className="nav-left">
-        <h2 className="logo" onClick={() => navigate("/")}>
-          Mozhibu
-        </h2>
+        <div className="logo-container">
+          <Link to="/">
+            <img 
+              src="/logo.png?v=1" 
+              alt="Mozhibu Logo" 
+              className="logo-img"
+              style={{ maxWidth: '40px', maxHeight: '40px' }}
+            />
+          </Link>
+        </div>
 
         <select className="language-select">
           <option>English</option>
@@ -289,11 +307,15 @@ const isAdmin = user?.role === "admin";
 
       {/* CENTER */}
       <div className="nav-center">
-        <input
-          type="text"
-          placeholder="Search stories..."
-          className="search-input"
-        />
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Search stories..."
+            className="search-input"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+        </form>
       </div>
 
       {/* RIGHT */}

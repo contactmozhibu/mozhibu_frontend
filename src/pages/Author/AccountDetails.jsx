@@ -53,6 +53,53 @@ export default function AccountDetails() {
   };
 
   /* ======================
+     DELETE AVATAR
+  ====================== */
+  const handleDeleteAvatar = async () => {
+    try {
+      const confirmDelete = window.confirm("Are you sure you want to delete your profile photo?");
+      if (!confirmDelete) return;
+
+      console.log("🗑️ Starting avatar deletion...");
+
+      const formData = new FormData();
+      formData.append("username", `${form.firstName || ""} ${form.lastName || ""}`.trim());
+      formData.append("mobile", form.phone || "");
+      formData.append("bio", form.summary || "");
+      formData.append("deleteAvatar", "true");
+
+      console.log("📤 Sending delete request...");
+      const response = await api.put("/authors/me", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("✅ Delete response:", response.data);
+
+      toast.success("Profile photo deleted ✓");
+      
+      // Show black placeholder instead of removing
+      const blackPlaceholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%23222'/%3E%3C/svg%3E";
+      setAvatarPreview(blackPlaceholder);
+      setForm({ ...form, avatar: "" }); // Set to empty string
+      
+      // Update user state with response data
+      const updatedUser = response.data.author;
+      setUser(updatedUser);
+      
+      // Update localStorage
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      
+      console.log("💾 Avatar deleted successfully");
+    } catch (err) {
+      console.error("❌ Delete error:", err);
+      toast.error("Failed to delete profile photo");
+    }
+  };
+
+  /* ======================
      SAVE PROFILE
   ====================== */
   const saveProfile = async () => {
@@ -83,8 +130,12 @@ export default function AccountDetails() {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    setUser(res.data.author);
-    setForm(res.data.author);
+    const updatedUser = res.data.author;
+    setUser(updatedUser);
+    setForm(updatedUser);
+    
+    // 🔥 UPDATE LOCALSTORAGE SO PROFILE PAGE REFLECTS CHANGES IMMEDIATELY
+    localStorage.setItem("user", JSON.stringify(updatedUser));
   } catch (err) {
     console.error(err);
     toast.error("Failed to update profile");
@@ -153,9 +204,9 @@ if (!user) return <p>Loading...</p>;
               <img
   src={
     avatarPreview ||
-    (user.avatar
+    (user.avatar && user.avatar.trim()
       ? getImageUrl(user.avatar)
-      : "https://via.placeholder.com/300x400?text=No+Image")
+      : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%23222'/%3E%3C/svg%3E")
   }
   alt="Profile"
 />
@@ -170,6 +221,18 @@ if (!user) return <p>Loading...</p>;
                     onChange={handleAvatarChange}
                   />
                 </label>
+              )}
+
+              {/* DELETE AVATAR BUTTON - Mini button at bottom-right */}
+              {edit && user.avatar && user.avatar.trim() && (
+                <button 
+                  className="delete-avatar-btn"
+                  onClick={handleDeleteAvatar}
+                  type="button"
+                  title="Delete profile photo"
+                >
+                  🗑
+                </button>
               )}
             </div>
           </div>
