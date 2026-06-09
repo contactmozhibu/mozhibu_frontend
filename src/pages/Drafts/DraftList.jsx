@@ -9,6 +9,7 @@ export default function DraftList() {
   const [published, setPublished] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const loggedInUserId = JSON.parse(localStorage.getItem("user"))?.id;
 
   useEffect(() => {
     loadData();
@@ -145,6 +146,34 @@ export default function DraftList() {
             <div className="draft-card published" key={story._id}>
               <h4>{story.title}</h4>
               <p>{story.description}</p>
+              <div className="draft-actions">
+
+        <button
+          onClick={() => navigate(`/edit-story/${story._id}`)}
+        >
+          Edit
+        </button>
+
+        <button
+          onClick={async () => {
+            if (!window.confirm("Delete this story?")) return;
+
+            await fetch(`${API_BASE_URL}/stories/${story._id}`, {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+
+            setPublished((prev) =>
+              prev.filter((s) => s._id !== story._id)
+            );
+          }}
+        >
+          Delete
+        </button>
+
+      </div>
             </div>
           ))
         )}

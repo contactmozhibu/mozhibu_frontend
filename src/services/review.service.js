@@ -22,3 +22,27 @@ export const saveReview = async (storyId, rating, comment) => {
   );
   return res.data;
 };
+/* =========================
+   👍 LIKE REVIEW
+========================= */
+export const likeReview = async (reviewId) => {
+  const res = await axios.put(
+    `${API}/${reviewId}/like`,
+    {},
+    authHeader()
+  );
+  return res.data;
+};
+
+/* =========================
+   💬 REPLY TO REVIEW
+========================= */
+
+export const replyReview = async (reviewId, comment) => {
+  const res = await axios.post(
+    `${API}/${reviewId}/reply`,
+    { comment },
+    authHeader()
+  );
+  return res.data;
+};

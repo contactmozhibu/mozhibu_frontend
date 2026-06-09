@@ -42,6 +42,7 @@ import AdminAnalytics from "./pages/Admin/AdminAnalytics";
 import AdminAuditLogs from "./pages/Admin/AdminAuditLogs";
 import AdminSettings from "./pages/Admin/AdminSettings";
 import ScrollToTop from "./components/ScrollToTop";
+import EditStory from "./pages/EditStory";
 
 import "./styles.css";
 
@@ -77,7 +78,7 @@ export default function App() {
 
         <Route path="/story/:id" element={<StoryDetail />} />
         <Route path="/story/preview" element={<StoryReader />} />
-
+        <Route path="/edit-story/:id" element={<EditStory />} />
         <Route path="/author/:id" element={<AuthorProfile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

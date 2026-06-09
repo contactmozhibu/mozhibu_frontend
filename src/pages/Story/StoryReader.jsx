@@ -208,16 +208,47 @@ export default function StoryReader({ preview = false }) {
 
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getReviews, saveReview } from "../../services/review.service";
+import { getReviews, saveReview, likeReview, replyReview } from "../../services/review.service";
+import { getStoryById } from "../../services/story.service";
+import ReplyThread from "../../components/reviews/ReplyThread";
 import "./storyReader.css";
 
-export default function StoryReader({ preview = false }) {
+/*export default function StoryReader({ preview = false }) {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { id } = useParams();
   const isPreview = preview || state?.preview;
   const story = state?.story;
-  
+  */
+ export default function StoryReader({ preview = false }) {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const isPreview = preview || state?.preview;
+  const [reviews, setReviews] = useState([]);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [showEditor, setShowEditor] = useState(false);
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [replyText, setReplyText] = useState("");
+const [openReplies, setOpenReplies] = useState({});
+const params = useParams();
+const storyId = state?.story?._id || params.id;
+const [story, setStory] = useState(state?.story || null);
+const reviewId = params.reviewId;
+console.log("STATE:", state);
+console.log("STORY ID:", storyId);
+console.log("REVIEW ID:", reviewId);
+
+//const storyId = params.id || state?.story?._id || state?.storyId;
+//const highlightId = params.reviewId || state?.reviewId;
+//const story = state?.story|| {};
+//const { id } = useParams();
+  //const story = state?.story;
+//const { storyId, reviewId } = useParams();
+//const storyId = params.id;
+//const loggedInUserId = JSON.parse(localStorage.getItem("user"))?.id;
+//const isAuthor = story?.author?._id === loggedInUserId;
     // 🔐 STEP 3: Extra safety guard
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -229,19 +260,18 @@ export default function StoryReader({ preview = false }) {
     }
 
     // Logged in but no story (URL refresh / direct access)
-    if (!state?.story) {
-      navigate(-1);
-    }
+    //if (!state?.story) {
+     // navigate(-1);
+    //}
   }, [navigate, state]);
 
 
-  const [reviews, setReviews] = useState([]);
+  /*const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [saving, setSaving] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
-
-  const refreshReviews = async () => {
+const refreshReviews = async () => {
     if (preview || !id) return;
     const data = await getReviews(id);
     setReviews(data);
@@ -250,8 +280,36 @@ export default function StoryReader({ preview = false }) {
   useEffect(() => {
     refreshReviews();
   }, [id, preview]);
+*/
+const toggleReplies = (id) => {
+  setOpenReplies((prev) => ({
+    ...prev,
+    [id]: !prev[id],
+  }));
+};
 
-  if (!story) return <p>Loading...</p>;
+  /* ================= LOAD REVIEWS ================= */
+  const refreshReviews = async () => {
+    if (!storyId) {
+    console.error("❌ storyId missing in refreshReviews");
+    return;
+  }
+    const data = await getReviews(storyId);
+    setReviews(data);
+  };
+
+  useEffect(() => {
+     if (!storyId) return;
+    refreshReviews();
+  }, [storyId, preview]);
+
+  /* ================= LIKE ================= */
+  const handleLike = async (reviewId) => {
+    await likeReview(reviewId);
+    refreshReviews();
+  };
+
+  /*if (!story) return <p>Loading...</p>;
 
   const handleSave = async () => {
     if (!rating) return alert("Select rating");
@@ -271,27 +329,118 @@ export default function StoryReader({ preview = false }) {
   };
 
   
-  
+  */
+
+  const handleReply = async (reviewId, text) => {
+  if (!text.trim()) return;
+
+  await replyReview(reviewId, text);
+
+  setReplyText("");
+  setReplyingTo(null);
+
+  refreshReviews();
+};
+
+  /* ================= SAVE REVIEW ================= */
+  const handleSave = async () => {
+      if (!storyId) {
+    console.error("❌ Missing storyId");
+    return;
+  }
+    if (!rating) return alert("Select rating");
+
+    try {
+      setSaving(true);
+console.log("story:", storyId);
+console.log("rating:", rating);
+console.log("comment:", comment);
+      await saveReview({story: storyId, rating, comment});
+
+      setRating(0);
+      setComment("");
+      setShowEditor(false);
+
+      refreshReviews();
+    } catch (err) {
+      alert("Failed to save review");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  //if (!story) return <p>Loading...</p>;
+
+  //if (!story && !state?.story) return <p>Loading...</p>;
+
+  if (!story) {
+  return <p>Loading story...</p>;
+}
+
+  const loggedInUserId = JSON.parse(localStorage.getItem("user"))?.id;
+
+const isAuthor =
+  story?.author?._id?.toString() === loggedInUserId?.toString();
+/*
+useEffect(() => {
+  if (!reviewId) return;
+
+  setTimeout(() => {
+    const el = document.getElementById(
+      `review-${reviewId}`
+    );
+
+    if (el) {
+      el.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, 500);
+}, [reviews, reviewId]);
+*/
+
+useEffect(() => {
+  if (!reviewId) return;
+
+  const timer = setTimeout(() => {
+    const el = document.getElementById(`review-${reviewId}`);
+
+    if (el) {
+      el.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, 500);
+
+  return () => clearTimeout(timer);
+}, [reviews, reviewId]);
+
+
+useEffect(() => {
+  const loadStory = async () => {
+    try {
+      if (!story && storyId) {
+        const data = await getStoryById(storyId);
+
+        console.log("LOADED STORY:", data);
+
+        setStory(data);
+      }
+    } catch (err) {
+      console.error("Failed to load story", err);
+    }
+  };
+
+  loadStory();
+}, [storyId]);
+
   return (
     
     <div className="reader-container">
 
     {isPreview && (
-      /*
-      <button
-        className="preview-back-btn"
-        onClick={() =>
-          navigate("/draft", {
-            state: {
-              step: 2,
-              story: story,
-            },
-          })
-        }
-      >
-        ← Back to Write Story
-      </button>
-      */
      <button
   className="preview-back-btn"
   onClick={() =>
@@ -346,7 +495,7 @@ export default function StoryReader({ preview = false }) {
         </div>
       )}
 
-      {/* 💬 REVIEWS */}
+      {/* 💬 REVIEWS 
       <h4>Reviews</h4>
 
       {preview ? (
@@ -367,7 +516,68 @@ export default function StoryReader({ preview = false }) {
       <small>{new Date(r.createdAt).toLocaleDateString()}</small>
     </div>
   </div>
+*/}
+{/* 💬 REVIEWS */}
+      <h4>Reviews</h4>
 
+      {reviews.length === 0 ? (
+        <p>No reviews yet</p>
+      ) : (
+        reviews.map((r) => (
+          <div
+  key={r._id}
+  id={`review-${r._id}`}
+  className={`review-card ${
+    reviewId === r._id ? "highlight-review" : ""
+  }`}
+>
+
+            {/* USER */}
+            <div style={{ display: "flex", gap: "10px" }}>
+              <div className="avatar">
+                {r.user?.username?.charAt(0).toUpperCase()}
+              </div>
+
+              <div>
+
+                <strong>{r.user?.username}</strong>
+                <div>{"⭐".repeat(r.rating)}</div>
+                <p>{r.comment}</p>
+
+                {/* ACTIONS */}
+                <div className="review-actions">
+                  <button onClick={() => handleLike(r._id)}>
+                    👍 {r.likes?.length || 0}
+                  </button>
+
+                  <button onClick={() => setReplyingTo(r._id)}>
+                    Reply
+                  </button>
+                </div>
+
+                {/* REPLY BOX */}
+                {replyingTo === r._id && (
+                  <div className="reply-box">
+                    <textarea
+                      value={replyText}
+                      onChange={(e) => setReplyText(e.target.value)}
+                    />
+
+                    <button onClick={() => handleReply(r._id, replyText)}>
+                      Send Reply
+                    </button>
+                  </div>
+                )}
+
+                {/* REPLIES THREAD */}
+             {/* THREADED REPLIES */}
+<ReplyThread replies={r.replies || []} 
+onReply={handleReply}/>
+
+              </div>
+            </div>
+
+          </div>
 
         ))
       )}

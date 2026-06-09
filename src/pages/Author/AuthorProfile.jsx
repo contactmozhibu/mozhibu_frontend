@@ -11,7 +11,11 @@ export default function AuthorProfile() {
   const [stories, setStories] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
 
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [showFollowing, setShowFollowing] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
@@ -21,8 +25,24 @@ export default function AuthorProfile() {
   const isAdmin = loggedUser?.role === "admin";
 
   const isMe = !id;
+  const loadFollowers = async () => {
+  const res = await api.get(
+    `/authors/${author._id}/followers`
+  );
 
-  console.log("AuthorProfile - id:", id, "isMe:", isMe, "isAdmin:", isAdmin, "loggedUser:", loggedUser);
+  setFollowers(res.data);
+  setShowFollowers(true);
+};
+
+const loadFollowing = async () => {
+  const res = await api.get(
+    `/authors/${author._id}/following`
+  );
+
+  setFollowing(res.data);
+  setShowFollowing(true);
+};
+  //console.log("AuthorProfile - id:", id, "isMe:", isMe, "isAdmin:", isAdmin, "loggedUser:", loggedUser);
 
   /* =========================
      FETCH AUTHOR + STORIES
@@ -33,12 +53,19 @@ export default function AuthorProfile() {
       return;
     }
 
+    /*
     // Admins trying to view their own profile should go to admin dashboard
     if (isAdmin && isMe) {
       console.log("Redirecting admin to admin dashboard (isMe=true)");
       navigate("/admin");
       return;
     }
+*/
+
+if (loggedUser?.role === "admin") {
+    navigate("/admin");
+    return;
+  }
 
     console.log("Fetching author profile for id:", id);
 
@@ -139,12 +166,20 @@ const refreshLoggedUser = async () => {
     setIsFollowing(res.data.isFollowing);
 
     // Update viewed author's followers
-    setAuthor((prev) => ({
-      ...prev,
-      followers: res.data.followers,
-    }));
+    //setAuthor((prev) => ({
+     // ...prev,
+     // followers: res.data.followers,
+    //}));
 
     // 🔥 IMPORTANT: refresh logged-in user
+
+    setAuthor((prev) => ({
+  ...prev,
+  followers: Array.isArray(res.data.followers)
+    ? res.data.followers
+    : [],
+}));
+
     await refreshLoggedUser();
 
   } catch (err) {
@@ -184,7 +219,7 @@ const refreshLoggedUser = async () => {
 
 
 
-<div className="ap-stats">
+{/*<div className="ap-stats">
   <span>
     <b>{stories.length}</b> Contents
   </span>
@@ -192,6 +227,19 @@ const refreshLoggedUser = async () => {
     <b>{author.followers?.length || 0}</b> Followers
   </span>
   <span>
+    <b>{author.following?.length || 0}</b> Following
+  </span>
+</div>*/}
+<div className="ap-stats">
+  <span>
+    <b>{stories.length}</b> Contents
+  </span>
+  <span   style={{ cursor: "pointer" }}
+  onClick={loadFollowers}>
+    <b>{author.followers?.length || 0}</b> Followers
+  </span>
+  <span   style={{ cursor: "pointer" }}
+  onClick={loadFollowing}>
     <b>{author.following?.length || 0}</b> Following
   </span>
 </div>
@@ -264,6 +312,65 @@ const refreshLoggedUser = async () => {
           })
         )}
       </div>
+
+{showFollowers && (
+    <div className="overlay">
+    <div className="modal">
+    <h3>Followers</h3>
+
+    {followers.map((user) => (
+      <div
+        key={user._id}
+        className="follow-user"
+      >
+        <img
+          src={getImageUrl(user.avatar)}
+          alt={user.username}
+        />
+
+        <span>{user.username}</span>
+      </div>
+      
+    ))}
+
+    <button
+      onClick={() => setShowFollowers(false)}
+    >
+      Close
+    </button>
+  </div>
+  </div>
+)}
+
+{showFollowing && (
+  <div className="overlay">
+    <div className="modal">
+    <h3>Following</h3>
+
+    {following.map((user) => (
+      <div
+        key={user._id}
+        className="follow-user"
+      >
+        <img
+          src={getImageUrl(user.avatar)}
+          alt={user.username}
+        />
+
+        <span>{user.username}</span>
+      </div>
+    ))}
+
+    <button
+      onClick={() => setShowFollowing(false)}
+    >
+      Close
+    </button>
+  </div>
+  </div>
+)}
+
+    
     </div>
   );
 }
