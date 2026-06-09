@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -313,14 +311,13 @@ export default function NewDraft() {
     }
 
     if (
-      (formData.ageCategory.includes("18") ||
-      formData.ageCategory.includes("Adults")) &&
-      !formData.contentType
-    ) {
+  formData.ageCategory === "Adults (18+)" &&
+  !formData.contentType
+)
+    {
       alert(t("draft_alert_select_type"));
       return false;
     }
-
     return true;
   };
 
@@ -384,9 +381,7 @@ export default function NewDraft() {
     // ✅ Validate contentType for adult ages
     if (
       (formData.ageCategory.includes("18") || 
-       formData.ageCategory.includes("Adults") ||
-       formData.ageCategory === "Young Adults (18-25)" ||
-       formData.ageCategory === "Adults (26+)") &&
+       formData.ageCategory.includes("Adults")) &&
       !formData.contentType
     ) {
       alert("Please select content type (Erotic/Non-Erotic) for adult content");
@@ -406,7 +401,10 @@ export default function NewDraft() {
       coverImage: formData.coverImage || ""
     };
 
-    console.log("📝 Publishing story with payload:", payload);
+    //console.log("📝 Publishing story with payload:", payload);
+if (!payload.contentType || payload.contentType.trim() === "") {
+      payload.contentType = "Non-Erotic";
+    }
 
     const res = await fetch(`${API_BASE_URL}/stories`, {
       method: "POST",
