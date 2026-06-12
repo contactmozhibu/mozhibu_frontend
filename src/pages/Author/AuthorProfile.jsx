@@ -53,21 +53,12 @@ const loadFollowing = async () => {
       return;
     }
 
-    /*
-    // Admins trying to view their own profile should go to admin dashboard
-    if (isAdmin && isMe) {
-      console.log("Redirecting admin to admin dashboard (isMe=true)");
-      navigate("/admin");
-      return;
-    }
-*/
-
 if (loggedUser?.role === "admin") {
     navigate("/admin");
     return;
   }
 
-    console.log("Fetching author profile for id:", id);
+    console.log("🔄 Fetching author profile for id:", id);
 
     const fetchData = async () => {
       try {
@@ -83,6 +74,7 @@ if (loggedUser?.role === "admin") {
             headers: { Authorization: `Bearer ${token}` },
         });
 
+        console.log("✅ Fetched own profile, updatedAt:", authorRes.data.author?.updatedAt);
         setAuthor(authorRes.data.author);
       } else {
   authorRes = await api.get(`/authors/${id}`, {
@@ -128,9 +120,25 @@ if (loggedUser?.role === "admin") {
       setRefreshTrigger(prev => prev + 1);
     };
 
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        console.log("⭐ Page became visible - refreshing data");
+        setRefreshTrigger(prev => prev + 1);
+      }
+    };
+
     window.addEventListener("focus", handleFocus);
-    return () => window.removeEventListener("focus", handleFocus);
-  }, []);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    
+    // Also refresh when this component mounts or when location changes
+    console.log("📍 AuthorProfile component mounted/location changed - triggering refresh");
+    setRefreshTrigger(prev => prev + 1);
+    
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [location]);
 
 const refreshLoggedUser = async () => {
   try {
@@ -199,7 +207,7 @@ const refreshLoggedUser = async () => {
           <img
             src={
               author?.avatar && author.avatar.trim()
-                ? getImageUrl(author.avatar)
+                ? getImageUrl(author.avatar, author.updatedAt)
                 : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%23222'/%3E%3C/svg%3E"
             }
             alt={author.username}
@@ -324,7 +332,7 @@ const refreshLoggedUser = async () => {
         className="follow-user"
       >
         <img
-          src={getImageUrl(user.avatar)}
+          src={getImageUrl(user.avatar, user.updatedAt)}
           alt={user.username}
         />
 
@@ -353,7 +361,7 @@ const refreshLoggedUser = async () => {
         className="follow-user"
       >
         <img
-          src={getImageUrl(user.avatar)}
+          src={getImageUrl(user.avatar, user.updatedAt)}
           alt={user.username}
         />
 

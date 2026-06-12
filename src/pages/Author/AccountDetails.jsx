@@ -113,9 +113,11 @@ export default function AccountDetails() {
     formData.append("bio", form.summary || "");
 
     if (form.avatar instanceof File) {
+      console.log("📤 Uploading new avatar file:", form.avatar.name);
       formData.append("avatar", form.avatar);
     }
 
+    console.log("💾 Sending profile update...");
     await api.put("/authors/me", formData, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -126,11 +128,17 @@ export default function AccountDetails() {
     toast.success("Profile updated successfully 🎉");
     setEdit(false);
 
+    console.log("🔄 Fetching updated profile...");
     const res = await api.get("/authors/me", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
     const updatedUser = res.data.author;
+    console.log("✅ Fetched user avatar:", updatedUser.avatar);
+    console.log("✅ Fetched user updatedAt:", updatedUser.updatedAt);
+    console.log("📊 Avatar changed from:", user?.avatar, "to:", updatedUser.avatar);
+    console.log("📊 updatedAt changed from:", user?.updatedAt, "to:", updatedUser.updatedAt);
+    
     setUser(updatedUser);
     setForm(updatedUser);
     
@@ -205,7 +213,7 @@ if (!user) return <p>Loading...</p>;
   src={
     avatarPreview ||
     (user.avatar && user.avatar.trim()
-      ? getImageUrl(user.avatar)
+      ? getImageUrl(user.avatar, user.updatedAt)
       : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%23222'/%3E%3C/svg%3E")
   }
   alt="Profile"
