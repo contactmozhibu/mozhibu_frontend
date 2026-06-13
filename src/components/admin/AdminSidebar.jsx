@@ -1,9 +1,20 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./AdminSidebar.css";
 
 const AdminSidebar = () => {
+  const navigate = useNavigate();
+  
   return (
     <aside className="admin-sidebar">
+      <div className="admin-back-btn-container">
+        <button 
+          className="admin-back-btn" 
+          onClick={() => navigate("/")}
+          title="Go back to home"
+        >
+          ← Back to Mozhibu
+        </button>
+      </div>
       <div className="admin-logo">
         <h2>Mozhibu Admin</h2>
       </div>

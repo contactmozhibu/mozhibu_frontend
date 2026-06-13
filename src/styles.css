@@ -720,6 +720,16 @@ body {
 }
 */
 
+/* ================= DRAFT EDITOR MODE ================= */
+/* Hide header and footer when in draft editor mode (step 2) */
+body.draft-editor-mode .header {
+  display: none;
+}
+
+body.draft-editor-mode footer {
+  display: none;
+}
+
 /* ================= RESPONSIVE DESIGN ================= */
 
 /* Tablet (768px and below) */

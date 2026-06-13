@@ -7,6 +7,34 @@
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.admin-back-btn-container {
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 10px;
+}
+
+.admin-back-btn {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-back-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.admin-back-btn:active {
+  transform: scale(0.98);
+}
+
 .admin-logo {
   padding: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);

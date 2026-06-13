@@ -25,8 +25,17 @@ export default function AccountDetails() {
       const res = await api.get("/authors/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUser(res.data.author);
-      setForm(res.data.author);
+      const author = res.data.author;
+      setUser(author);
+      
+      // Extract firstName from username if firstName is empty
+      const firstName = author.firstName || (author.username ? author.username.split(" ")[0] : "");
+      
+      setForm({
+        ...author,
+        firstName,
+        email: author.email // Ensure email is pre-filled as default
+      });
     } catch {
       toast.error("Failed to load profile");
     }
@@ -108,16 +117,18 @@ export default function AccountDetails() {
 
     const username = `${form.firstName || ""} ${form.lastName || ""}`.trim();
 
+    // Save firstName explicitly
+    formData.append("firstName", form.firstName || "");
+    formData.append("lastName", form.lastName || "");
     formData.append("username", username);
+    formData.append("email", form.email || "");
     formData.append("mobile", form.phone || "");
     formData.append("bio", form.summary || "");
 
     if (form.avatar instanceof File) {
-      console.log("📤 Uploading new avatar file:", form.avatar.name);
       formData.append("avatar", form.avatar);
     }
 
-    console.log("💾 Sending profile update...");
     await api.put("/authors/me", formData, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -128,19 +139,21 @@ export default function AccountDetails() {
     toast.success("Profile updated successfully 🎉");
     setEdit(false);
 
-    console.log("🔄 Fetching updated profile...");
     const res = await api.get("/authors/me", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
     const updatedUser = res.data.author;
-    console.log("✅ Fetched user avatar:", updatedUser.avatar);
-    console.log("✅ Fetched user updatedAt:", updatedUser.updatedAt);
-    console.log("📊 Avatar changed from:", user?.avatar, "to:", updatedUser.avatar);
-    console.log("📊 updatedAt changed from:", user?.updatedAt, "to:", updatedUser.updatedAt);
-    
     setUser(updatedUser);
-    setForm(updatedUser);
+    
+    // Extract firstName from username if not present
+    const firstName = updatedUser.firstName || (updatedUser.username ? updatedUser.username.split(" ")[0] : "");
+    
+    setForm({
+      ...updatedUser,
+      firstName,
+      email: updatedUser.email
+    });
     
     // 🔥 UPDATE LOCALSTORAGE SO PROFILE PAGE REFLECTS CHANGES IMMEDIATELY
     localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -213,7 +226,7 @@ if (!user) return <p>Loading...</p>;
   src={
     avatarPreview ||
     (user.avatar && user.avatar.trim()
-      ? getImageUrl(user.avatar, user.updatedAt)
+      ? getImageUrl(user.avatar)
       : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%23222'/%3E%3C/svg%3E")
   }
   alt="Profile"
@@ -274,7 +287,12 @@ if (!user) return <p>Loading...</p>;
               placeholder="Last Name"
             />
 
-            <input value={user.email} disabled />
+            <input
+              name="email"
+              value={form.email || ""}
+              disabled
+              placeholder="Email"
+            />
 
             <input
               name="phone"

@@ -355,7 +355,7 @@ const toggleReplies = (id) => {
 console.log("story:", storyId);
 console.log("rating:", rating);
 console.log("comment:", comment);
-      await saveReview({story: storyId, rating, comment});
+      await saveReview(storyId, rating, comment);
 
       setRating(0);
       setComment("");
@@ -443,14 +443,25 @@ useEffect(() => {
     {isPreview && (
      <button
   className="preview-back-btn"
-  onClick={() =>
+  onClick={() => {
+    // ✅ Pass complete story data back to draft for restoration
     navigate("/draft/new", {
       state: {
         fromPreview: true,
-        story: story,
+        story: {
+          title: story.title || "",
+          description: story.description || "",
+          category: story.category || "",
+          ageCategory: story.ageCategory || "",
+          contentType: story.contentType || "",
+          language: story.language || "English",
+          coverImage: story.coverImage || "",
+          content: story.content || "",
+          subcategories: story.subcategories || []
+        }
       },
     })
-  }
+  }}
 >
   ← Back to Write Story
 </button>

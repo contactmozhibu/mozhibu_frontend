@@ -69,7 +69,7 @@ useEffect(() => {
       <div className="left-group">
         <Link to="/" className="logo-link">
           <img 
-            src="/logo.png?v=1" 
+            src="/logo alone.png" 
             alt="Mozhibu Logo" 
             className="logo-img"
             style={{ maxWidth: '40px', maxHeight: '40px' }}
@@ -247,12 +247,17 @@ export default function Header() {
       <div className="left-group">
         <Link to="/" className="logo-link">
           <img 
-            src="/logo.png?v=1" 
+            src="/logo alone .png" 
             alt="Mozhibu Logo" 
             className="logo-img"
             style={{ maxWidth: '40px', maxHeight: '40px' }}
           />
-          <span className="logo-text">Mozhibu</span>
+          <img 
+            src="/naming logo.png" 
+            alt="Mozhibu" 
+            className="logo-text"
+            style={{ maxHeight: '30px', marginLeft: '8px' }}
+          />
         </Link>
         <select
           className="language-select"

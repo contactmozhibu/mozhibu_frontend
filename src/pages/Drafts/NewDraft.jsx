@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { translateText } from "../../services/translate.service";
 import { convertTanglishToTamil, transliterateToTamil } from "../../utils/tanglishTransliterator";
@@ -10,6 +10,7 @@ import AgeFilter from "../../components/filters/AgeFilter";
 
 export default function NewDraft() {
   const navigate = useNavigate();
+  const location = useLocation();
   const token = localStorage.getItem("token");
   const { t, i18n } = useTranslation();
   const { isTanglishMode, handleTanglishChange, convertFullText, toggleTanglishMode } = useTanglishInput();
@@ -129,6 +130,75 @@ export default function NewDraft() {
 
     loadDraft();
   }, [draftId, token]);
+
+  /* ✅ RESTORE PREVIEW DATA AND AUTO-SAVE */
+  useEffect(() => {
+    if (location.state?.fromPreview && location.state?.story) {
+      const previewStory = location.state.story;
+      
+      // Restore form data from preview
+      setFormData({
+        title: previewStory.title || "",
+        description: previewStory.description || "",
+        category: previewStory.category || "",
+        ageCategory: previewStory.ageCategory || "",
+        contentType: previewStory.contentType || "",
+        language: previewStory.language || "English",
+        coverImage: previewStory.coverImage || "",
+      });
+      
+      setContent(previewStory.content || "");
+      setSubcategories(previewStory.subcategories || []);
+      
+      // ✅ Move to step 2 (writing step)
+      setStep(2);
+      
+      // ✅ Auto-save the preview data as draft
+      autoSavePreviewDraft(previewStory);
+    }
+  }, [location.state?.fromPreview]);
+
+  // Hide header when in editor mode (step 2)
+  useEffect(() => {
+    if (step === 2) {
+      document.body.classList.add("draft-editor-mode");
+    } else {
+      document.body.classList.remove("draft-editor-mode");
+    }
+    return () => document.body.classList.remove("draft-editor-mode");
+  }, [step]);
+
+  /* ✅ AUTO-SAVE PREVIEW DRAFT */
+  const autoSavePreviewDraft = async (storyData) => {
+    try {
+      const payload = {
+        title: storyData.title,
+        description: storyData.description,
+        category: storyData.category,
+        ageCategory: storyData.ageCategory,
+        contentType: storyData.contentType,
+        language: storyData.language,
+        coverImage: storyData.coverImage,
+        content: storyData.content,
+        subcategories: storyData.subcategories || []
+      };
+
+      const res = await fetch(`${API_BASE_URL}/drafts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        console.log("✅ Preview draft auto-saved successfully");
+      }
+    } catch (err) {
+      console.error("❌ Auto-save failed:", err);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -359,7 +429,7 @@ export default function NewDraft() {
     }
 
     alert(t("draft_alert_saved") || "Draft saved successfully!");
-    navigate("/drafts");
+    navigate("/draft/list");
   };
 
   const publishStory = async () => {

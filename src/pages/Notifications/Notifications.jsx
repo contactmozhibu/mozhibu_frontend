@@ -115,7 +115,7 @@ const loadFollowing = async () => {
           <img
             src={
               n.fromUser?.avatar 
-                ? getImageUrl(n.fromUser.avatar, n.fromUser.updatedAt)
+                ? getImageUrl(n.fromUser.avatar)
                 : "https://via.placeholder.com/50"
             }
             alt=""

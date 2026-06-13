@@ -291,7 +291,7 @@ export default function Navbar() {
         <div className="logo-container">
           <Link to="/">
             <img 
-              src="/logo.png?v=1" 
+              src="/logo alone .png" 
               alt="Mozhibu Logo" 
               className="logo-img"
               style={{ maxWidth: '40px', maxHeight: '40px' }}

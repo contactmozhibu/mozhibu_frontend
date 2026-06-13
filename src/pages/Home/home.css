@@ -73,7 +73,7 @@
 
 /* ===== HERO SECTION ===== */
 .hero {
-  background: #09856c !important;
+  background: linear-gradient(135deg, #1a3a52 0%, #2c5282 50%, #c9a961 100%) !important;
   color: white !important;
   padding: 12px 30px !important;
   text-align: left !important;
